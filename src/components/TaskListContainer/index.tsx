@@ -3,7 +3,7 @@ import { Form, FormField, Divider } from 'semantic-ui-react';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
-import AddTaskButton from '../AddTaskButton/index';
+import AddTaskButton from '../../comtainers/AddTaskButton';
 
 export interface TaskListContainerProps {
   taskList: Task[];
@@ -25,7 +25,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   return (
     <Form>
       <div>
-        <AddTaskButton handleOnClick={handleOnClick} />
+        <AddTaskButton />
       </div>
       <Divider />
       <div>

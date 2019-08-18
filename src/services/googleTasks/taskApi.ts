@@ -18,8 +18,8 @@ export const getTaskListFactory = () => {
   return getTaskList;
 };
 
-export const createTaskFactory = () => {
-  const createTask = async (param: TasksInsertParam) => {
+export const insertTaskFactory = () => {
+  const insertTask = async (param: TasksInsertParam) => {
     try {
       const response = await gapi.client.tasks.tasks.insert(param);
 
@@ -31,7 +31,7 @@ export const createTaskFactory = () => {
     }
   };
 
-  return createTask;
+  return insertTask;
 };
 interface StandardParameters {
   alt?: 'JSON';
