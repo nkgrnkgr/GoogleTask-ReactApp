@@ -220,3 +220,23 @@ gapi.client.tasks.tasks
   })
   .then(response => console.log(response.result));
 ```
+
+### ログインユーザー情報の取得
+
+#### Sign-In 時
+
+https://developers.google.com/identity/sign-in/web/reference#googleauthcurrentuserget
+
+```typescript
+const user = await gapi.auth2.getAuthInstance().signIn(); // GoogleUser を SignIn() の　Promiseの戻り値として使える
+console.log(user.getBasicProfile().getName());
+console.log(user.getBasicProfile().getImageUrl());
+```
+
+#### Sign-In 後
+
+```typescript
+const user = gapi.auth2.getAuthInstance().currentUser.get(); // GoogleUser を取得できる
+console.log(user.getBasicProfile().getName());
+console.log(user.getBasicProfile().getImageUrl());
+```
