@@ -3,6 +3,26 @@ import {
   Task as TasksResource,
 } from './services/googleTasks/models';
 
+import {
+  TasksListParam,
+  TasksGetParam,
+  TasksClearParam,
+  TasksDeleteParam,
+  TasksInsertParam,
+  TasksMoveParam,
+  TasksPatchParam,
+  TasksUpdateParam,
+} from './services/googleTasks/taskApi';
+
+import {
+  TaskListsListParam,
+  TaskListsGetParam,
+  TaskListsInsertParam,
+  TaskListsUpdateParam,
+  TaskListsDeleteParam,
+  TaskListsPatchParam,
+} from './services/googleTasks/taskListApi';
+
 declare interface Gapi {
   load: Function;
   client: Client;
@@ -20,18 +40,6 @@ declare interface Client {
 
 declare interface Auth2 {
   getAuthInstance: Function;
-}
-
-// Resource
-
-// RequestParam
-
-interface StandardParameters {
-  alt?: 'JSON';
-  fields?: string;
-  prettyPrint?: boolean;
-  quotaUser?: string;
-  userIp?: string;
 }
 
 // Response
@@ -62,91 +70,26 @@ interface ListResult<T> extends BaseResult {
 
 declare interface TaskLists {
   list: (
-    param: {
-      maxResults?: number;
-      pageToken?: string;
-    } & StandardParameters,
+    param: TaskListsListParam,
   ) => Promise<Response<ListResult<TaskListsResource>>>;
-  get: (
-    param: { tasklist: string } & StandardParameters,
-  ) => Promise<Response<TaskListsResource>>;
-  insert: (
-    param: {} & TaskListsResource & StandardParameters,
-  ) => Promise<Response<TaskListsResource>>;
-  update: (
-    param: {
-      tasklist: string;
-    } & TaskListsResource &
-      StandardParameters,
-  ) => Promise<Response<TaskListsResource>>;
-  delete: (
-    param: { tasklist: string } & StandardParameters,
-  ) => Promise<Response<false>>;
-  patch: (
-    param: {
-      tasklist: string;
-    } & TaskListsResource &
-      StandardParameters,
-  ) => Promise<Response<TaskListsResource>>;
+  get: (param: TaskListsGetParam) => Promise<Response<TaskListsResource>>;
+  insert: (param: TaskListsInsertParam) => Promise<Response<TaskListsResource>>;
+  update: (param: TaskListsUpdateParam) => Promise<Response<TaskListsResource>>;
+  delete: (param: TaskListsDeleteParam) => Promise<Response<false>>;
+  patch: (param: TaskListsPatchParam) => Promise<Response<TaskListsResource>>;
 }
 
 // Tasks
 
 declare interface Tasks {
-  list: (
-    param: {
-      tasklist: string;
-      completedMax?: string;
-      completedMin?: string;
-      dueMax?: string;
-      dueMin?: string;
-      maxResults?: number;
-      pageToken?: string;
-      showCompleted?: boolean;
-      showDeleted?: boolean;
-      showHidden?: boolean;
-      updatedMin?: string;
-    } & StandardParameters,
-  ) => Promise<Response<ListResult<TasksResource>>>;
-  get: (
-    param: { tasklist: string; task: string } & StandardParameters,
-  ) => Promise<Response<TasksResource>>;
-  insert: (
-    param: {
-      tasklist: string;
-      parent?: string;
-      previous?: string;
-    } & TasksResource &
-      StandardParameters,
-  ) => Promise<Response<TasksResource>>;
-  update: (
-    param: {
-      tasklist: string;
-      task: string;
-    } & TasksResource &
-      StandardParameters,
-  ) => Promise<Response<TasksResource>>;
-  delete: (
-    param: { tasklist: string; task: string } & StandardParameters,
-  ) => Promise<Response<false>>;
-  clear: (
-    param: { tasklist: string } & StandardParameters,
-  ) => Promise<Response<false>>;
-  move: (
-    param: {
-      tasklist: string;
-      task: string;
-      parent?: string;
-      previous?: string;
-    } & StandardParameters,
-  ) => Promise<Response<TasksResource>>;
-  patch: (
-    param: {
-      tasklist: string;
-      task: string;
-    } & TasksResource &
-      StandardParameters,
-  ) => Promise<Response<TasksResource>>;
+  list: (param: TasksListParam) => Promise<Response<ListResult<TasksResource>>>;
+  get: (param: TasksGetParam) => Promise<Response<TasksResource>>;
+  insert: (param: TasksInsertParam) => Promise<Response<TasksResource>>;
+  update: (param: TasksUpdateParam) => Promise<Response<TasksResource>>;
+  delete: (param: TasksDeleteParam) => Promise<Response<false>>;
+  clear: (param: TasksClearParam) => Promise<Response<false>>;
+  move: (param: TasksMoveParam) => Promise<Response<TasksResource>>;
+  patch: (param: TasksPatchParam) => Promise<Response<TasksResource>>;
 }
 
 interface Headers {
