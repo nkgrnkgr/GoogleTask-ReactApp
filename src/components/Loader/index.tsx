@@ -5,7 +5,7 @@ interface LoadingProps {
   isInverted?: boolean;
 }
 
-const Loading: FC<LoadingProps> = ({ isInverted = true }) => (
+const Loading: FC<LoadingProps> = ({ isInverted = false }) => (
   <Loader inline="centered" active inverted={isInverted} />
 );
 
