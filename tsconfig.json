@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "plugins": [
       {
         "name": "css-module-types"
@@ -26,17 +22,8 @@
     "tsBuildInfoFile": "./buildcache/tsbuildinfo",
     "jsx": "preserve",
     "outDir": "build",
-    "rootDirs": [
-      "src"
-    ]
+    "rootDirs": ["src"]
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "scripts"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "dist", "scripts"]
 }
