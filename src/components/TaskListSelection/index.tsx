@@ -3,10 +3,10 @@ import { Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
 import { TaskList } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 
-export interface ToDoListSelectionProps {
+export interface TaskListSelectionProps {
   taskLists: TaskList[];
   isLoading: boolean;
-  handleOnChange: (selectedToDoListId: string) => void;
+  handleOnChange: (selectedTaskListId: string) => void;
 }
 
 const createOptionsFromTaskLists = (taskLists: TaskList[] = []) => {
@@ -40,7 +40,7 @@ const findTaskIdFromSelectedValue = (
 };
 
 // https://react.semantic-ui.com/modules/dropdown/#types-selection
-const ToDoListSelection: FC<ToDoListSelectionProps> = ({
+const TaskListSelection: FC<TaskListSelectionProps> = ({
   taskLists,
   isLoading,
   handleOnChange,
@@ -51,7 +51,7 @@ const ToDoListSelection: FC<ToDoListSelectionProps> = ({
 
   const options = createOptionsFromTaskLists(taskLists);
 
-  const handoleOnChangeToDoList = (data: DropdownProps) => {
+  const handoleOnChangeTaskList = (data: DropdownProps) => {
     const { value } = data;
     if (value) {
       if (typeof value === 'string') {
@@ -64,16 +64,16 @@ const ToDoListSelection: FC<ToDoListSelectionProps> = ({
   return (
     <div style={{ width: '40%' }}>
       <Dropdown
-        placeholder="Select ToDoList"
+        placeholder="Select TaskList"
         fluid
         selection
         options={options}
         onChange={(event: SyntheticEvent, data: DropdownProps) =>
-          handoleOnChangeToDoList(data)
+          handoleOnChangeTaskList(data)
         }
       />
     </div>
   );
 };
 
-export default ToDoListSelection;
+export default TaskListSelection;

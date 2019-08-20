@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { Button, Divider } from 'semantic-ui-react';
-import ToDoListSelection from './comtainers/ToDoListSelection/index';
+import TaskListSelection from './comtainers/TaskListSelection/index';
 import TaskListContainer from './comtainers/TaskListContainer/index';
 import GoogleApiConfig from './GoogleApiConfig';
 
@@ -31,7 +31,7 @@ const App: React.FC = () => {
           SignIn
         </Button>
         <Divider />
-        <ToDoListSelection />
+        <TaskListSelection />
         <Divider />
         <TaskListContainer />
       </header>
