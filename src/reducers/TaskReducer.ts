@@ -36,18 +36,18 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
         isLoading: false,
         error: action.payload.error,
       };
-    case ActionType.INSERT_TASK_START:
+    case ActionType.INSERT_AND_GET_TASKLIST_START:
       return {
         ...state,
         isLoading: true,
       };
-    case ActionType.INSERT_TASK_SUCCEED:
+    case ActionType.INSERT_AND_GET_TASKLIST_SUCCEED:
       return {
         ...state,
-        taskList: [...state.taskList, action.payload.result.task],
+        taskList: action.payload.result.tasklist,
         isLoading: false,
       };
-    case ActionType.INSERT_TASK_FAIL:
+    case ActionType.INSERT_AND_GET_TASKLIST_FAIL:
       return {
         ...state,
         isLoading: false,
