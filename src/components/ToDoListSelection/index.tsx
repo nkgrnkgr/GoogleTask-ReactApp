@@ -62,15 +62,17 @@ const ToDoListSelection: FC<ToDoListSelectionProps> = ({
   };
 
   return (
-    <Dropdown
-      placeholder="Select ToDoList"
-      fluid
-      selection
-      options={options}
-      onChange={(event: SyntheticEvent, data: DropdownProps) =>
-        handoleOnChangeToDoList(data)
-      }
-    />
+    <div style={{ width: '40%' }}>
+      <Dropdown
+        placeholder="Select ToDoList"
+        fluid
+        selection
+        options={options}
+        onChange={(event: SyntheticEvent, data: DropdownProps) =>
+          handoleOnChangeToDoList(data)
+        }
+      />
+    </div>
   );
 };
 

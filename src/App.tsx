@@ -26,8 +26,8 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Google Tasks Client</p>
-        <Button primary onClick={() => handleClick()}>
+        <h2>Google Tasks Client</h2>
+        <Button positive onClick={() => handleClick()}>
           SignIn
         </Button>
         <Divider />
