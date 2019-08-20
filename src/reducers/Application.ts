@@ -3,10 +3,10 @@ import { ApplicationAction } from '../actions/Application';
 import * as ActionType from '../actions/ApplicationConstants';
 
 export interface ApplicationState {
-  selectedToDoListId: string;
+  selectedTaskListId: string;
 }
 export const initialState: ApplicationState = {
-  selectedToDoListId: '',
+  selectedTaskListId: '',
 };
 
 const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
@@ -14,10 +14,10 @@ const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
   action: ApplicationAction,
 ): ApplicationState => {
   switch (action.type) {
-    case ActionType.SELECT_TODOLIST:
+    case ActionType.SELECT_TASKLIST:
       return {
         ...state,
-        selectedToDoListId: action.payload.selectedToDoListId,
+        selectedTaskListId: action.payload.selectedTaskListId,
       };
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

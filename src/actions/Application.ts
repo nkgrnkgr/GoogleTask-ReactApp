@@ -1,13 +1,13 @@
 import * as ActionType from './ApplicationConstants';
 
-interface SelectToDoListPrams {
-  selectedToDoListId: string;
+interface SelectTaskListPrams {
+  selectedTaskListId: string;
 }
 export const application = {
-  selectToDoList: (params: SelectToDoListPrams) => ({
-    type: ActionType.SELECT_TODOLIST,
+  selectTaskList: (params: SelectTaskListPrams) => ({
+    type: ActionType.SELECT_TASKLIST,
     payload: params,
   }),
 };
 
-export type ApplicationAction = ReturnType<typeof application.selectToDoList>;
+export type ApplicationAction = ReturnType<typeof application.selectTaskList>;

@@ -7,39 +7,39 @@ import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
   isLoading?: boolean;
-  selectedToDoListId: string;
+  selectedTaskListId: string;
 }
 
 interface DispatchProps {
-  insertAndGetTaskListStart: (selectedToDoListId: string) => void;
+  insertAndGetTaskListStart: (selectedTaskListId: string) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
 
 const mapStateTopProps = (state: CombinedState): StateProps => ({
-  selectedToDoListId: state.application.selectedToDoListId,
+  selectedTaskListId: state.application.selectedTaskListId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
-      insertAndGetTaskListStart: (selectedToDoListId: string) =>
-        InsertAndGetTaskList.start({ tasklist: selectedToDoListId, title: '' }),
+      insertAndGetTaskListStart: (selectedTaskListId: string) =>
+        InsertAndGetTaskList.start({ tasklist: selectedTaskListId, title: '' }),
     },
     dispatch,
   );
 
 const AddTaskButton: FC<EnhancemembersProps> = ({
   insertAndGetTaskListStart,
-  selectedToDoListId,
+  selectedTaskListId,
 }) => {
-  if (selectedToDoListId === '') {
+  if (selectedTaskListId === '') {
     return <></>;
   }
 
   return (
     <AddTaskButtonComponent
-      handleOnClick={() => insertAndGetTaskListStart(selectedToDoListId)}
+      handleOnClick={() => insertAndGetTaskListStart(selectedTaskListId)}
     />
   );
 };
