@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { insertTask } from '../../actions/Task';
+import { InsertAndGetTaskList } from '../../actions/Task';
 import AddTaskButtonComponent from '../../components/AddTaskButton';
 import { CombinedState } from '../../reducers/root';
 
@@ -11,7 +11,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  insertTaskStart: (selectedToDoListId: string) => void;
+  insertAndGetTaskListStart: (selectedToDoListId: string) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -23,14 +23,14 @@ const mapStateTopProps = (state: CombinedState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
-      insertTaskStart: (selectedToDoListId: string) =>
-        insertTask.start({ tasklist: selectedToDoListId, title: '' }),
+      insertAndGetTaskListStart: (selectedToDoListId: string) =>
+        InsertAndGetTaskList.start({ tasklist: selectedToDoListId, title: '' }),
     },
     dispatch,
   );
 
 const AddTaskButton: FC<EnhancemembersProps> = ({
-  insertTaskStart,
+  insertAndGetTaskListStart,
   selectedToDoListId,
 }) => {
   if (selectedToDoListId === '') {
@@ -39,7 +39,7 @@ const AddTaskButton: FC<EnhancemembersProps> = ({
 
   return (
     <AddTaskButtonComponent
-      handleOnClick={() => insertTaskStart(selectedToDoListId)}
+      handleOnClick={() => insertAndGetTaskListStart(selectedToDoListId)}
     />
   );
 };

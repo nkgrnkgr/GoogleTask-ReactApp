@@ -29,17 +29,24 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
       </div>
       <Divider />
       <div>
-        {taskList.map(task => {
-          return (
-            <FormField key={task.id}>
-              <TaskComponent
-                label={task.title || ''}
-                handleOnChange={() => {}}
-                checked={task.status === 'completed'}
-              />
-            </FormField>
-          );
-        })}
+        {taskList
+          .sort((a, b) => {
+            const { position: positionA = '0' } = a;
+            const { position: positionB = '0' } = b;
+
+            return parseInt(positionA, 10) - parseInt(positionB, 10);
+          })
+          .map(task => {
+            return (
+              <FormField key={task.id}>
+                <TaskComponent
+                  label={task.title || ''}
+                  handleOnChange={() => {}}
+                  checked={task.status === 'completed'}
+                />
+              </FormField>
+            );
+          })}
       </div>
     </Form>
   );
