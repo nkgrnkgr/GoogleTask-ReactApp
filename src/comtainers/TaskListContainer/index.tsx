@@ -9,7 +9,7 @@ import { CombinedState } from '../../reducers/root';
 interface StateProps {
   taskList: Task[];
   isLoading?: boolean;
-  selectedToDoListId: string;
+  selectedTaskListId: string;
 }
 
 interface DispatchProps {
@@ -21,7 +21,7 @@ type EnhancemembersProps = StateProps & DispatchProps;
 const mapStateTopProps = (state: CombinedState): StateProps => ({
   taskList: state.task.taskList,
   isLoading: state.task.isLoading,
-  selectedToDoListId: state.application.selectedToDoListId,
+  selectedTaskListId: state.application.selectedTaskListId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
@@ -37,13 +37,13 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   getTaskListStart,
   taskList = [],
   isLoading = false,
-  selectedToDoListId,
+  selectedTaskListId,
 }) => {
   useEffect(() => {
-    if (selectedToDoListId !== '') {
-      getTaskListStart(selectedToDoListId);
+    if (selectedTaskListId !== '') {
+      getTaskListStart(selectedTaskListId);
     }
-  }, [selectedToDoListId]);
+  }, [selectedTaskListId]);
 
   return <TaskListContainer taskList={taskList} isLoading={isLoading} />;
 };

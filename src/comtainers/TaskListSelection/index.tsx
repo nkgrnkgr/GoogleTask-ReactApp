@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { TaskList } from '../../services/googleTasks/models';
 import { application } from '../../actions/Application';
 import { getTaskLists } from '../../actions/TaskList';
-import ToDoListSelection from '../../components/ToDoListSelection';
+import TaskListSelection from '../../components/TaskListSelection/index';
 import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
@@ -14,7 +14,7 @@ interface StateProps {
 
 interface DispatchProps {
   getTaskListsStart: () => void;
-  selectToDoList: (selectedToDoListId: string) => void;
+  selectTaskList: (selectedTaskListId: string) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -28,9 +28,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
       getTaskListsStart: () => getTaskLists.start(),
-      selectToDoList: (selectedToDoListId: string) =>
-        application.selectToDoList({
-          selectedToDoListId,
+      selectTaskList: (selectedTaskListId: string) =>
+        application.selectTaskList({
+          selectedTaskListId,
         }),
     },
     dispatch,
@@ -40,7 +40,7 @@ const TaskContainers: FC<EnhancemembersProps> = ({
   getTaskListsStart,
   taskLists = [],
   isLoading = false,
-  selectToDoList,
+  selectTaskList,
 }) => {
   useEffect(() => {
     setTimeout(() => {
@@ -49,10 +49,10 @@ const TaskContainers: FC<EnhancemembersProps> = ({
   }, []);
 
   return (
-    <ToDoListSelection
+    <TaskListSelection
       taskLists={taskLists}
       isLoading={isLoading}
-      handleOnChange={selectToDoList}
+      handleOnChange={selectTaskList}
     />
   );
 };
