@@ -36,6 +36,23 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
         isLoading: false,
         error: action.payload.error,
       };
+    case ActionType.INSERT_TASK_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ActionType.INSERT_TASK_SUCCEED:
+      return {
+        ...state,
+        taskList: [...state.taskList, action.payload.result.task],
+        isLoading: false,
+      };
+    case ActionType.INSERT_TASK_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
+      };
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const _: never = action;
