@@ -26,28 +26,31 @@ export const getTaskList = {
     error: true,
   }),
 };
-interface InsertTaskParams {
+interface InsertAndGetTaskListParams {
   tasklist: string;
   parent?: string;
   previous?: string;
   title: string;
 }
-interface InsertTaskResult {
-  task: Task;
+interface InsertAndGetTaskListResult {
+  tasklist: Task[];
 }
 
-export const insertTask = {
-  start: (params: InsertTaskParams) => ({
-    type: ActionType.INSERT_TASK_START as typeof ActionType.INSERT_TASK_START,
+export const InsertAndGetTaskList = {
+  start: (params: InsertAndGetTaskListParams) => ({
+    type: ActionType.INSERT_AND_GET_TASKLIST_START as typeof ActionType.INSERT_AND_GET_TASKLIST_START,
     payload: params,
   }),
-  succeed: (params: InsertTaskParams, result: InsertTaskResult) => ({
-    type: ActionType.INSERT_TASK_SUCCEED as typeof ActionType.INSERT_TASK_SUCCEED,
+  succeed: (
+    params: InsertAndGetTaskListParams,
+    result: InsertAndGetTaskListResult,
+  ) => ({
+    type: ActionType.INSERT_AND_GET_TASKLIST_SUCCEED as typeof ActionType.INSERT_AND_GET_TASKLIST_SUCCEED,
     payload: { params, result },
   }),
 
-  fail: (params: InsertTaskParams, error: AxiosError) => ({
-    type: ActionType.INSERT_TASK_FAIL as typeof ActionType.INSERT_TASK_FAIL,
+  fail: (params: InsertAndGetTaskListParams, error: AxiosError) => ({
+    type: ActionType.INSERT_AND_GET_TASKLIST_FAIL as typeof ActionType.INSERT_AND_GET_TASKLIST_FAIL,
     payload: { params, error },
     error: true,
   }),
@@ -57,6 +60,6 @@ export type TaskAction =
   | ReturnType<typeof getTaskList.start>
   | ReturnType<typeof getTaskList.succeed>
   | ReturnType<typeof getTaskList.fail>
-  | ReturnType<typeof insertTask.start>
-  | ReturnType<typeof insertTask.succeed>
-  | ReturnType<typeof insertTask.fail>;
+  | ReturnType<typeof InsertAndGetTaskList.start>
+  | ReturnType<typeof InsertAndGetTaskList.succeed>
+  | ReturnType<typeof InsertAndGetTaskList.fail>;
