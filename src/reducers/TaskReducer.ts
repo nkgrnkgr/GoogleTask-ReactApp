@@ -13,6 +13,14 @@ export const initialState: TaskState = {
   isLoading: false,
 };
 
+const updateTask = (taskList: Task[], task: Task) => {
+  const index = taskList.findIndex(t => t.id === task.id);
+  const t = [...taskList];
+  t.splice(index, 1, task);
+
+  return t;
+};
+
 const taskReducer: Reducer<TaskState, TaskAction> = (
   state: TaskState = initialState,
   action: TaskAction,
@@ -56,17 +64,15 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.PATCH_TASK_START:
       return {
         ...state,
-        isLoading: true,
       };
     case ActionType.PATCH_TASK_SUCCEED:
       return {
         ...state,
-        isLoading: false,
+        taskList: updateTask(state.taskList, action.payload.result),
       };
     case ActionType.PATCH_TASK_FAIL:
       return {
         ...state,
-        isLoading: false,
         error: action.payload.error,
       };
     default: {
