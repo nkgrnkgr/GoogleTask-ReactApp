@@ -7,6 +7,29 @@ build by
 - Redux
 - Redux-Saga
 
+## How To Start
+
+### create .env
+
+```bash
+touch .env
+```
+
+#### Google API client ID and key
+
+```bash
+REACT_APP_CLIENT_ID=xxxx
+REACT_APP_API_KEY=yyyy
+
+```
+
+```bash
+yarn
+yarn start
+```
+
+[localhos:3000](http://localhost:3000)
+
 ## Google Tasks API
 
 ### Quick Start
