@@ -60,11 +60,16 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
     });
   };
 
+  const handleDeleteTask = (task: Task) => {
+    console.log(task);
+  };
+
   return (
     <TaskListContainer
       taskList={taskList}
       isLoading={isLoading}
       handleOnChange={handleOnChangeTask}
+      handleDelete={handleDeleteTask}
     />
   );
 };

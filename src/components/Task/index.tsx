@@ -5,9 +5,14 @@ import { Task } from '../../services/googleTasks/models';
 export interface TaskProps {
   task: Task;
   handleOnChange: (task: Task) => void;
+  handleDelete: (task: Task) => void;
 }
 
-const TaskComponent: FC<TaskProps> = ({ task, handleOnChange }) => {
+const TaskComponent: FC<TaskProps> = ({
+  task,
+  handleOnChange,
+  handleDelete,
+}) => {
   const { title = '', status = 'needsAction' } = task;
 
   const handleOnChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -41,6 +46,14 @@ const TaskComponent: FC<TaskProps> = ({ task, handleOnChange }) => {
         onChange={handleOnChangeInput}
         defaultValue={title || ''}
       />
+      <Button
+        icon
+        basic
+        style={{ boxShadow: '0px 0px' }}
+        onClick={() => handleDelete(task)}
+      >
+        <Icon name="delete" color="red" />
+      </Button>
     </div>
   );
 };
