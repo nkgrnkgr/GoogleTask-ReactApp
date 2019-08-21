@@ -49,6 +49,10 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
     return <Loading />;
   }
 
+  if (taskLists.length === 0) {
+    return <div></div>;
+  }
+
   const options = createOptionsFromTaskLists(taskLists);
 
   const handoleOnChangeTaskList = (data: DropdownProps) => {
