@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { FC } from 'react';
 import { Form, FormField, Divider } from 'semantic-ui-react';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
@@ -8,19 +8,17 @@ import AddTaskButton from '../../comtainers/AddTaskButton';
 export interface TaskListContainerProps {
   taskList: Task[];
   isLoading: boolean;
+  handleOnChange: (task: Task) => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
   taskList,
   isLoading = false,
+  handleOnChange,
 }) => {
   if (isLoading) {
     return <Loading />;
   }
-
-  const handleOnClick = (event: MouseEvent<HTMLButtonElement>) => {
-    console.log(event);
-  };
 
   return (
     <Form>
@@ -39,11 +37,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           .map(task => {
             return (
               <FormField key={task.id}>
-                <TaskComponent
-                  label={task.title || ''}
-                  handleOnChange={() => {}}
-                  checked={task.status === 'completed'}
-                />
+                <TaskComponent task={task} handleOnChange={handleOnChange} />
               </FormField>
             );
           })}
