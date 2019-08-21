@@ -34,6 +34,22 @@ export const insertAndGetTaskListFactory = () => {
 
   return insertAndGetTaskList;
 };
+
+export const patchTaskFactory = () => {
+  const patchTask = async (param: TasksPatchParam) => {
+    try {
+      const response = await gapi.client.tasks.tasks.patch(param);
+      const task = response.result;
+
+      return task;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  return patchTask;
+};
+
 interface StandardParameters {
   alt?: 'JSON';
   fields?: string;
