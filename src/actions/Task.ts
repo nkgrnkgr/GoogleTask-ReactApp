@@ -1,57 +1,66 @@
-import { AxiosError } from 'axios';
 import * as ActionType from './TaskConstants';
 import { Task } from '../services/googleTasks/models';
-
-interface GetTaskListParams {
-  taskListId: string;
-}
-interface GetTaskListResult {
-  tasklist: Task[];
-}
+import {
+  TasksPatchParam,
+  TasksInsertParam,
+  TasksListParam,
+} from '../services/googleTasks/taskApi';
 
 export const getTaskList = {
-  start: (params: GetTaskListParams) => ({
+  start: (param: TasksListParam) => ({
     type: ActionType.GET_TASKLIST_START as typeof ActionType.GET_TASKLIST_START,
-    payload: params,
+    payload: param,
   }),
 
-  succeed: (params: GetTaskListParams, result: GetTaskListResult) => ({
+  succeed: (param: TasksListParam, result: Task[]) => ({
     type: ActionType.GET_TASKLIST_SUCCEED as typeof ActionType.GET_TASKLIST_SUCCEED,
-    payload: { params, result },
+    payload: { param, result },
   }),
 
-  fail: (params: GetTaskListParams, error: AxiosError) => ({
+  fail: (param: TasksListParam, error: Error) => ({
     type: ActionType.GET_TASKLIST_FAIL as typeof ActionType.GET_TASKLIST_FAIL,
-    payload: { params, error },
+    payload: { param, error },
     error: true,
   }),
 };
-interface InsertAndGetTaskListParams {
-  tasklist: string;
-  parent?: string;
-  previous?: string;
-  title: string;
-}
-interface InsertAndGetTaskListResult {
-  tasklist: Task[];
-}
-
 export const insertAndGetTaskList = {
-  start: (params: InsertAndGetTaskListParams) => ({
+  start: (paramForInsert: TasksInsertParam, paramForList: TasksListParam) => ({
     type: ActionType.INSERT_AND_GET_TASKLIST_START as typeof ActionType.INSERT_AND_GET_TASKLIST_START,
-    payload: params,
+    payload: { paramForInsert, paramForList },
   }),
   succeed: (
-    params: InsertAndGetTaskListParams,
-    result: InsertAndGetTaskListResult,
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+    result: Task[],
   ) => ({
     type: ActionType.INSERT_AND_GET_TASKLIST_SUCCEED as typeof ActionType.INSERT_AND_GET_TASKLIST_SUCCEED,
-    payload: { params, result },
+    payload: { paramForInsert, paramForList, result },
   }),
 
-  fail: (params: InsertAndGetTaskListParams, error: AxiosError) => ({
+  fail: (
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+    error: Error,
+  ) => ({
     type: ActionType.INSERT_AND_GET_TASKLIST_FAIL as typeof ActionType.INSERT_AND_GET_TASKLIST_FAIL,
-    payload: { params, error },
+    payload: { paramForInsert, paramForList, error },
+    error: true,
+  }),
+};
+
+export const patchTask = {
+  start: (param: TasksPatchParam) => ({
+    type: ActionType.PATCH_TASK_START as typeof ActionType.PATCH_TASK_START,
+    payload: param,
+  }),
+  succeed: (param: TasksPatchParam, result: Task) => ({
+    type: ActionType.PATCH_TASK_SUCCEED as typeof ActionType.PATCH_TASK_SUCCEED,
+    payload: { param, result },
+  }),
+
+  fail: (param: TasksPatchParam, error: Error) => ({
+    type: ActionType.PATCH_TASK_FAIL as typeof ActionType.PATCH_TASK_FAIL,
+    payload: { param, error },
     error: true,
   }),
 };
@@ -62,4 +71,7 @@ export type TaskAction =
   | ReturnType<typeof getTaskList.fail>
   | ReturnType<typeof insertAndGetTaskList.start>
   | ReturnType<typeof insertAndGetTaskList.succeed>
-  | ReturnType<typeof insertAndGetTaskList.fail>;
+  | ReturnType<typeof insertAndGetTaskList.fail>
+  | ReturnType<typeof patchTask.start>
+  | ReturnType<typeof patchTask.succeed>
+  | ReturnType<typeof patchTask.fail>;

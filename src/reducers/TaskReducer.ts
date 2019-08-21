@@ -27,7 +27,7 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.GET_TASKLIST_SUCCEED:
       return {
         ...state,
-        taskList: action.payload.result.tasklist,
+        taskList: action.payload.result,
         isLoading: false,
       };
     case ActionType.GET_TASKLIST_FAIL:
@@ -44,10 +44,26 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.INSERT_AND_GET_TASKLIST_SUCCEED:
       return {
         ...state,
-        taskList: action.payload.result.tasklist,
+        taskList: action.payload.result,
         isLoading: false,
       };
     case ActionType.INSERT_AND_GET_TASKLIST_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
+      };
+    case ActionType.PATCH_TASK_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ActionType.PATCH_TASK_SUCCEED:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case ActionType.PATCH_TASK_FAIL:
       return {
         ...state,
         isLoading: false,

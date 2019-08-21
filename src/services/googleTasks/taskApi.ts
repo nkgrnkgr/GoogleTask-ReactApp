@@ -1,12 +1,9 @@
 import { Task as TasksResource } from './models';
 
 export const getTaskListFactory = () => {
-  const getTaskList = async (tasklistId: string) => {
+  const getTaskList = async (param: TasksListParam) => {
     try {
-      const response = await gapi.client.tasks.tasks.list({
-        tasklist: tasklistId,
-      });
-
+      const response = await gapi.client.tasks.tasks.list(param);
       const taskList = response.result.items;
 
       return taskList;
@@ -19,12 +16,13 @@ export const getTaskListFactory = () => {
 };
 
 export const insertAndGetTaskListFactory = () => {
-  const insertAndGetTaskList = async (param: TasksInsertParam) => {
+  const insertAndGetTaskList = async (
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+  ) => {
     try {
-      await gapi.client.tasks.tasks.insert(param);
-      const response = await gapi.client.tasks.tasks.list({
-        tasklist: param.tasklist,
-      });
+      await gapi.client.tasks.tasks.insert(paramForInsert);
+      const response = await gapi.client.tasks.tasks.list(paramForList);
 
       return response.result.items;
     } catch (err) {

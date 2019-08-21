@@ -3,12 +3,14 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import * as TaskListAction from '../actions/TaskListConstants';
 import * as TaskAction from '../actions/TaskConstants';
 import { getTaskLists } from '../actions/TaskList';
-import { getTaskList, insertAndGetTaskList } from '../actions/Task';
+import { getTaskList, insertAndGetTaskList, patchTask } from '../actions/Task';
 import { getTaskListsFactory } from '../services/googleTasks/taskListApi';
 import {
   getTaskListFactory,
   insertAndGetTaskListFactory,
+  patchTaskFactory,
 } from '../services/googleTasks/taskApi';
+import { Task } from '../services/googleTasks/models';
 
 function* runGetTaskLists() {
   try {
@@ -25,15 +27,13 @@ export function* watchGetTaskLists() {
 }
 
 function* runGetTaskList(action: ReturnType<typeof getTaskList.start>) {
-  const { taskListId } = action.payload;
-
   try {
     const api = getTaskListFactory();
-    const tasklist = yield call(api, taskListId);
+    const tasklist: Task[] = yield call(api, action.payload);
 
-    yield put(getTaskList.succeed({ taskListId }, { tasklist }));
+    yield put(getTaskList.succeed(action.payload, tasklist));
   } catch (error) {
-    yield put(getTaskList.fail({ taskListId }, error));
+    yield put(getTaskList.fail(action.payload, error));
   }
 }
 export function* watchGetTaskList() {
@@ -43,22 +43,16 @@ export function* watchGetTaskList() {
 function* runInsertAndGetTaskList(
   action: ReturnType<typeof insertAndGetTaskList.start>,
 ) {
-  const { tasklist, title, parent, previous } = action.payload;
-
+  const { paramForInsert, paramForList } = action.payload;
   try {
     const api = insertAndGetTaskListFactory();
-    const taskList = yield call(api, { tasklist, title, parent, previous });
+    const taskList: Task[] = yield call(api, paramForInsert, paramForList);
 
     yield put(
-      insertAndGetTaskList.succeed(
-        { tasklist, title, parent, previous },
-        { tasklist: taskList },
-      ),
+      insertAndGetTaskList.succeed(paramForInsert, paramForList, taskList),
     );
   } catch (error) {
-    yield put(
-      insertAndGetTaskList.fail({ tasklist, title, parent, previous }, error),
-    );
+    yield put(insertAndGetTaskList.fail(paramForInsert, paramForList, error));
   }
 }
 export function* watchInsertAndGetTaskList() {
@@ -68,10 +62,25 @@ export function* watchInsertAndGetTaskList() {
   );
 }
 
+function* runPatchTask(action: ReturnType<typeof patchTask.start>) {
+  try {
+    const api = patchTaskFactory();
+    const task: Task = yield call(api, action.payload);
+
+    yield put(patchTask.succeed(action.payload, task));
+  } catch (error) {
+    yield put(patchTask.fail(action.payload, error));
+  }
+}
+export function* watchPatchTask() {
+  yield takeLatest(TaskAction.PATCH_TASK_START, runPatchTask);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetTaskLists),
     fork(watchGetTaskList),
     fork(watchInsertAndGetTaskList),
+    fork(watchPatchTask),
   ]);
 }
