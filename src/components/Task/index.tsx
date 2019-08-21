@@ -1,29 +1,48 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC } from 'react';
 import { Input, Icon, Button } from 'semantic-ui-react';
+import { Task } from '../../services/googleTasks/models';
 
 export interface TaskProps {
-  label: string;
-  handleOnChange: (isChecked: boolean) => void;
-  checked: boolean;
+  task: Task;
+  handleOnChange: (task: Task) => void;
 }
 
-const Task: FC<TaskProps> = ({
-  label = '',
-  handleOnChange,
-  checked = false,
-}) => {
-  const handleOnChange2 = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
+const TaskComponent: FC<TaskProps> = ({ task, handleOnChange }) => {
+  const { title = '', status = 'needsAction' } = task;
+
+  const handleOnChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const t = { ...task, title: e.currentTarget.value };
+    handleOnChange(t);
+  };
+
+  const handleOnChangeStatus = () => {
+    const h = {
+      ...task,
+      status: task.status === 'completed' ? 'needsAction' : 'completed',
+    };
+    handleOnChange(h);
   };
 
   return (
     <div style={{ display: 'flex' }}>
-      <Button icon basic style={{ boxShadow: '0px 0px' }}>
-        <Icon name={checked ? 'check' : 'circle outline'} color="blue" />
+      <Button
+        icon
+        basic
+        style={{ boxShadow: '0px 0px' }}
+        onClick={() => handleOnChangeStatus()}
+      >
+        <Icon
+          name={status === 'completed' ? 'check' : 'circle outline'}
+          color="blue"
+        />
       </Button>
-      <Input transparent onChange={handleOnChange2} defaultValue={label} />
+      <Input
+        transparent
+        onChange={handleOnChangeInput}
+        defaultValue={title || ''}
+      />
     </div>
   );
 };
 
-export default Task;
+export default TaskComponent;
