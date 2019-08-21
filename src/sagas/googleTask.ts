@@ -3,7 +3,7 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import * as TaskListAction from '../actions/TaskListConstants';
 import * as TaskAction from '../actions/TaskConstants';
 import { getTaskLists } from '../actions/TaskList';
-import { getTaskList, InsertAndGetTaskList } from '../actions/Task';
+import { getTaskList, insertAndGetTaskList } from '../actions/Task';
 import { getTaskListsFactory } from '../services/googleTasks/taskListApi';
 import {
   getTaskListFactory,
@@ -41,7 +41,7 @@ export function* watchGetTaskList() {
 }
 
 function* runInsertAndGetTaskList(
-  action: ReturnType<typeof InsertAndGetTaskList.start>,
+  action: ReturnType<typeof insertAndGetTaskList.start>,
 ) {
   const { tasklist, title, parent, previous } = action.payload;
 
@@ -50,14 +50,14 @@ function* runInsertAndGetTaskList(
     const taskList = yield call(api, { tasklist, title, parent, previous });
 
     yield put(
-      InsertAndGetTaskList.succeed(
+      insertAndGetTaskList.succeed(
         { tasklist, title, parent, previous },
         { tasklist: taskList },
       ),
     );
   } catch (error) {
     yield put(
-      InsertAndGetTaskList.fail({ tasklist, title, parent, previous }, error),
+      insertAndGetTaskList.fail({ tasklist, title, parent, previous }, error),
     );
   }
 }

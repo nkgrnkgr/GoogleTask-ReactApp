@@ -36,7 +36,7 @@ interface InsertAndGetTaskListResult {
   tasklist: Task[];
 }
 
-export const InsertAndGetTaskList = {
+export const insertAndGetTaskList = {
   start: (params: InsertAndGetTaskListParams) => ({
     type: ActionType.INSERT_AND_GET_TASKLIST_START as typeof ActionType.INSERT_AND_GET_TASKLIST_START,
     payload: params,
@@ -60,6 +60,6 @@ export type TaskAction =
   | ReturnType<typeof getTaskList.start>
   | ReturnType<typeof getTaskList.succeed>
   | ReturnType<typeof getTaskList.fail>
-  | ReturnType<typeof InsertAndGetTaskList.start>
-  | ReturnType<typeof InsertAndGetTaskList.succeed>
-  | ReturnType<typeof InsertAndGetTaskList.fail>;
+  | ReturnType<typeof insertAndGetTaskList.start>
+  | ReturnType<typeof insertAndGetTaskList.succeed>
+  | ReturnType<typeof insertAndGetTaskList.fail>;
