@@ -15,7 +15,10 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  insertAndGetTaskListStart: (param: TasksInsertParam & TasksListParam) => void;
+  insertAndGetTaskListStart: (
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+  ) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -27,8 +30,10 @@ const mapStateTopProps = (state: CombinedState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
-      insertAndGetTaskListStart: (param: TasksInsertParam & TasksListParam) =>
-        insertAndGetTaskList.start(param),
+      insertAndGetTaskListStart: (
+        paramForInsert: TasksInsertParam,
+        paramForList: TasksListParam,
+      ) => insertAndGetTaskList.start(paramForInsert, paramForList),
     },
     dispatch,
   );
@@ -44,7 +49,10 @@ const AddTaskButton: FC<EnhancemembersProps> = ({
   return (
     <AddTaskButtonComponent
       handleOnClick={() =>
-        insertAndGetTaskListStart({ tasklist: selectedTaskListId, title: '' })
+        insertAndGetTaskListStart(
+          { tasklist: selectedTaskListId, title: '' },
+          { tasklist: selectedTaskListId },
+        )
       }
     />
   );

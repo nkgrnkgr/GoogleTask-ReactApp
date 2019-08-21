@@ -17,11 +17,12 @@ export const getTaskListFactory = () => {
 
 export const insertAndGetTaskListFactory = () => {
   const insertAndGetTaskList = async (
-    param: TasksInsertParam & TasksListParam,
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
   ) => {
     try {
-      await gapi.client.tasks.tasks.insert(param);
-      const response = await gapi.client.tasks.tasks.list(param);
+      await gapi.client.tasks.tasks.insert(paramForInsert);
+      const response = await gapi.client.tasks.tasks.list(paramForList);
 
       return response.result.items;
     } catch (err) {
