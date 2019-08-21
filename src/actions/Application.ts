@@ -4,9 +4,9 @@ interface SelectTaskListPrams {
   selectedTaskListId: string;
 }
 export const application = {
-  selectTaskList: (params: SelectTaskListPrams) => ({
+  selectTaskList: (param: SelectTaskListPrams) => ({
     type: ActionType.SELECT_TASKLIST,
-    payload: params,
+    payload: param,
   }),
 };
 

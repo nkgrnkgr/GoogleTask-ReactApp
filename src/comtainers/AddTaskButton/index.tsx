@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { insertAndGetTaskList } from '../../actions/Task';
 import AddTaskButtonComponent from '../../components/AddTaskButton';
 import { CombinedState } from '../../reducers/root';
+import {
+  TasksInsertParam,
+  TasksListParam,
+} from '../../services/googleTasks/taskApi';
 
 interface StateProps {
   isLoading?: boolean;
@@ -11,7 +15,10 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  insertAndGetTaskListStart: (selectedTaskListId: string) => void;
+  insertAndGetTaskListStart: (
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+  ) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -23,8 +30,10 @@ const mapStateTopProps = (state: CombinedState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
-      insertAndGetTaskListStart: (selectedTaskListId: string) =>
-        insertAndGetTaskList.start({ tasklist: selectedTaskListId, title: '' }),
+      insertAndGetTaskListStart: (
+        paramForInsert: TasksInsertParam,
+        paramForList: TasksListParam,
+      ) => insertAndGetTaskList.start(paramForInsert, paramForList),
     },
     dispatch,
   );
@@ -39,7 +48,12 @@ const AddTaskButton: FC<EnhancemembersProps> = ({
 
   return (
     <AddTaskButtonComponent
-      handleOnClick={() => insertAndGetTaskListStart(selectedTaskListId)}
+      handleOnClick={() =>
+        insertAndGetTaskListStart(
+          { tasklist: selectedTaskListId, title: '' },
+          { tasklist: selectedTaskListId },
+        )
+      }
     />
   );
 };

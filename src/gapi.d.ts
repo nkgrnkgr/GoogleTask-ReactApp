@@ -3,6 +3,8 @@ import {
   Task as TasksResource,
 } from './services/googleTasks/models';
 
+import { ListResult } from './services/googleTasks/basicApi';
+
 import {
   TasksListParam,
   TasksGetParam,
@@ -50,18 +52,6 @@ interface Response<T> {
   result: T;
   status: number;
   statusText: string;
-}
-
-interface BaseResult {
-  kind: string;
-  etag: string;
-}
-
-interface ListResult<T> extends BaseResult {
-  id: string;
-  title: string;
-  nextPageToken: string;
-  items: T[];
 }
 
 // Method
