@@ -43,13 +43,16 @@ export function* watchGetTaskList() {
 function* runInsertAndGetTaskList(
   action: ReturnType<typeof insertAndGetTaskList.start>,
 ) {
+  const { paramForInsert, paramForList } = action.payload;
   try {
     const api = insertAndGetTaskListFactory();
-    const taskList: Task[] = yield call(api, action.payload);
+    const taskList: Task[] = yield call(api, paramForInsert, paramForList);
 
-    yield put(insertAndGetTaskList.succeed(action.payload, taskList));
+    yield put(
+      insertAndGetTaskList.succeed(paramForInsert, paramForList, taskList),
+    );
   } catch (error) {
-    yield put(insertAndGetTaskList.fail(action.payload, error));
+    yield put(insertAndGetTaskList.fail(paramForInsert, paramForList, error));
   }
 }
 export function* watchInsertAndGetTaskList() {
