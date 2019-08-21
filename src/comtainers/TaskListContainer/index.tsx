@@ -5,6 +5,7 @@ import { Task } from '../../services/googleTasks/models';
 import { getTaskList } from '../../actions/Task';
 import TaskListContainer from '../../components/TaskListContainer';
 import { CombinedState } from '../../reducers/root';
+import { TasksListParam } from '../../services/googleTasks/taskApi';
 
 interface StateProps {
   taskList: Task[];
@@ -13,7 +14,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  getTaskListStart: (taskListId: string) => void;
+  getTaskListStart: (param: TasksListParam) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -27,21 +28,20 @@ const mapStateTopProps = (state: CombinedState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
-      getTaskListStart: (taskListId: string) =>
-        getTaskList.start({ taskListId }),
+      getTaskListStart: (param: TasksListParam) => getTaskList.start(param),
     },
     dispatch,
   );
 
 const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   getTaskListStart,
-  taskList = [],
+  taskList,
   isLoading = false,
   selectedTaskListId,
 }) => {
   useEffect(() => {
     if (selectedTaskListId !== '') {
-      getTaskListStart(selectedTaskListId);
+      getTaskListStart({ tasklist: selectedTaskListId });
     }
   }, [selectedTaskListId]);
 

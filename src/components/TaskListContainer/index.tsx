@@ -11,7 +11,7 @@ export interface TaskListContainerProps {
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
-  taskList = [],
+  taskList,
   isLoading = false,
 }) => {
   if (isLoading) {
