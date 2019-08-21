@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { InsertAndGetTaskList } from '../../actions/Task';
+import { insertAndGetTaskList } from '../../actions/Task';
 import AddTaskButtonComponent from '../../components/AddTaskButton';
 import { CombinedState } from '../../reducers/root';
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
       insertAndGetTaskListStart: (selectedTaskListId: string) =>
-        InsertAndGetTaskList.start({ tasklist: selectedTaskListId, title: '' }),
+        insertAndGetTaskList.start({ tasklist: selectedTaskListId, title: '' }),
     },
     dispatch,
   );
