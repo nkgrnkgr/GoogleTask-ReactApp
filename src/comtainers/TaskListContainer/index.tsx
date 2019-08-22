@@ -44,6 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
 const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   getTaskListStart,
   patchTaskStart,
+  deleteTaskStart,
   taskList,
   isLoading = false,
   selectedTaskListId,
@@ -64,7 +65,7 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   };
 
   const handleDeleteTask = (task: Task) => {
-    console.log(task);
+    deleteTaskStart({ tasklist: selectedTaskListId, task: task.id || '' });
   };
 
   return (

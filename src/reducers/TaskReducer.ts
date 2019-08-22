@@ -13,8 +13,11 @@ export const initialState: TaskState = {
   isLoading: false,
 };
 
-const updateTaskList = (taskList: Task[], task: Task) => {
+const updateTask = (taskList: Task[], task: Task) => {
   return taskList.map(c => (c.id === task.id ? task : c));
+};
+const deleteTask = (taskList: Task[], deleteTargetId: string) => {
+  return taskList.filter(c => c.id !== deleteTargetId);
 };
 
 const taskReducer: Reducer<TaskState, TaskAction> = (
@@ -64,9 +67,23 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.PATCH_TASK_SUCCEED:
       return {
         ...state,
-        taskList: updateTaskList(state.taskList, action.payload.result),
+        taskList: updateTask(state.taskList, action.payload.result),
       };
     case ActionType.PATCH_TASK_FAIL:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case ActionType.DELETE_TASK_START:
+      return {
+        ...state,
+      };
+    case ActionType.DELETE_TASK_SUCCEED:
+      return {
+        ...state,
+        taskList: deleteTask(state.taskList, action.payload.param.task),
+      };
+    case ActionType.DELETE_TASK_FAIL:
       return {
         ...state,
         error: action.payload.error,
