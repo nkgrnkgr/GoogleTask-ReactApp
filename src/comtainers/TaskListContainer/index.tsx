@@ -2,12 +2,13 @@ import React, { FC, useEffect } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Task } from '../../services/googleTasks/models';
-import { getTaskList, patchTask } from '../../actions/Task';
+import { getTaskList, patchTask, deleteTask } from '../../actions/Task';
 import TaskListContainer from '../../components/TaskListContainer';
 import { CombinedState } from '../../reducers/root';
 import {
   TasksListParam,
   TasksPatchParam,
+  TasksDeleteParam,
 } from '../../services/googleTasks/taskApi';
 
 interface StateProps {
@@ -19,6 +20,7 @@ interface StateProps {
 interface DispatchProps {
   getTaskListStart: (param: TasksListParam) => void;
   patchTaskStart: (param: TasksPatchParam) => void;
+  deleteTaskStart: (param: TasksDeleteParam) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -34,6 +36,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
     {
       getTaskListStart: (param: TasksListParam) => getTaskList.start(param),
       patchTaskStart: (param: TasksPatchParam) => patchTask.start(param),
+      deleteTaskStart: (param: TasksDeleteParam) => deleteTask.start(param),
     },
     dispatch,
   );
