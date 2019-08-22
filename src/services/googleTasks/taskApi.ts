@@ -48,6 +48,20 @@ export const patchTaskFactory = () => {
   return patchTask;
 };
 
+export const deleteTaskFactory = () => {
+  const deleteTask = async (param: TasksDeleteParam) => {
+    try {
+      await gapi.client.tasks.tasks.delete(param);
+    } catch (err) {
+      throw err;
+    }
+
+    return false;
+  };
+
+  return deleteTask;
+};
+
 interface StandardParameters {
   alt?: 'JSON';
   fields?: string;

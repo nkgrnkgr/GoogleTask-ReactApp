@@ -9,12 +9,14 @@ export interface TaskListContainerProps {
   taskList: Task[];
   isLoading: boolean;
   handleOnChange: (task: Task) => void;
+  handleDelete: (task: Task) => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
   taskList,
   isLoading = false,
   handleOnChange,
+  handleDelete,
 }) => {
   if (isLoading) {
     return <Loading />;
@@ -37,7 +39,11 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           .map(task => {
             return (
               <FormField key={task.id}>
-                <TaskComponent task={task} handleOnChange={handleOnChange} />
+                <TaskComponent
+                  task={task}
+                  handleOnChange={handleOnChange}
+                  handleDelete={handleDelete}
+                />
               </FormField>
             );
           })}
