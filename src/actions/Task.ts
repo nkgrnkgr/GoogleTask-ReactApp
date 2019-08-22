@@ -71,9 +71,9 @@ export const deleteTask = {
     type: ActionType.DELETE_TASK_START as typeof ActionType.DELETE_TASK_START,
     payload: param,
   }),
-  succeed: (param: TasksDeleteParam, result: Task) => ({
+  succeed: (param: TasksDeleteParam) => ({
     type: ActionType.DELETE_TASK_SUCCEED as typeof ActionType.DELETE_TASK_SUCCEED,
-    payload: { param, result },
+    payload: { param },
   }),
 
   fail: (param: TasksDeleteParam, error: Error) => ({
@@ -92,4 +92,7 @@ export type TaskAction =
   | ReturnType<typeof insertAndGetTaskList.fail>
   | ReturnType<typeof patchTask.start>
   | ReturnType<typeof patchTask.succeed>
-  | ReturnType<typeof patchTask.fail>;
+  | ReturnType<typeof patchTask.fail>
+  | ReturnType<typeof deleteTask.start>
+  | ReturnType<typeof deleteTask.succeed>
+  | ReturnType<typeof deleteTask.fail>;
