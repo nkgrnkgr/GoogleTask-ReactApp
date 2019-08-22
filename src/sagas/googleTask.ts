@@ -3,12 +3,18 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import * as TaskListAction from '../actions/TaskListConstants';
 import * as TaskAction from '../actions/TaskConstants';
 import { getTaskLists } from '../actions/TaskList';
-import { getTaskList, insertAndGetTaskList, patchTask } from '../actions/Task';
+import {
+  getTaskList,
+  insertAndGetTaskList,
+  patchTask,
+  deleteTask,
+} from '../actions/Task';
 import { getTaskListsFactory } from '../services/googleTasks/taskListApi';
 import {
   getTaskListFactory,
   insertAndGetTaskListFactory,
   patchTaskFactory,
+  deleteTaskFactory,
 } from '../services/googleTasks/taskApi';
 import { Task } from '../services/googleTasks/models';
 
@@ -76,11 +82,26 @@ export function* watchPatchTask() {
   yield takeLatest(TaskAction.PATCH_TASK_START, runPatchTask);
 }
 
+function* runDeleteTask(action: ReturnType<typeof deleteTask.start>) {
+  try {
+    const api = deleteTaskFactory();
+    yield call(api, action.payload);
+
+    yield put(deleteTask.succeed(action.payload));
+  } catch (error) {
+    yield put(deleteTask.fail(action.payload, error));
+  }
+}
+export function* watchDeleteTask() {
+  yield takeLatest(TaskAction.DELETE_TASK_START, runDeleteTask);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetTaskLists),
     fork(watchGetTaskList),
     fork(watchInsertAndGetTaskList),
     fork(watchPatchTask),
+    fork(watchDeleteTask),
   ]);
 }

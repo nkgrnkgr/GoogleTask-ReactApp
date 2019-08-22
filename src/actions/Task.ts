@@ -4,6 +4,7 @@ import {
   TasksPatchParam,
   TasksInsertParam,
   TasksListParam,
+  TasksDeleteParam,
 } from '../services/googleTasks/taskApi';
 
 export const getTaskList = {
@@ -65,6 +66,23 @@ export const patchTask = {
   }),
 };
 
+export const deleteTask = {
+  start: (param: TasksDeleteParam) => ({
+    type: ActionType.DELETE_TASK_START as typeof ActionType.DELETE_TASK_START,
+    payload: param,
+  }),
+  succeed: (param: TasksDeleteParam) => ({
+    type: ActionType.DELETE_TASK_SUCCEED as typeof ActionType.DELETE_TASK_SUCCEED,
+    payload: { param },
+  }),
+
+  fail: (param: TasksDeleteParam, error: Error) => ({
+    type: ActionType.DELETE_TASK_FAIL as typeof ActionType.DELETE_TASK_FAIL,
+    payload: { param, error },
+    error: true,
+  }),
+};
+
 export type TaskAction =
   | ReturnType<typeof getTaskList.start>
   | ReturnType<typeof getTaskList.succeed>
@@ -74,4 +92,7 @@ export type TaskAction =
   | ReturnType<typeof insertAndGetTaskList.fail>
   | ReturnType<typeof patchTask.start>
   | ReturnType<typeof patchTask.succeed>
-  | ReturnType<typeof patchTask.fail>;
+  | ReturnType<typeof patchTask.fail>
+  | ReturnType<typeof deleteTask.start>
+  | ReturnType<typeof deleteTask.succeed>
+  | ReturnType<typeof deleteTask.fail>;
