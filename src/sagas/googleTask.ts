@@ -23,7 +23,7 @@ function* runGetTaskLists() {
     const api = getTaskListsFactory();
     const tasklists = yield call(api);
 
-    yield put(getTaskLists.succeed({ tasklists }));
+    yield put(getTaskLists.succeed(tasklists));
   } catch (error) {
     yield put(getTaskLists.fail(error));
   }
