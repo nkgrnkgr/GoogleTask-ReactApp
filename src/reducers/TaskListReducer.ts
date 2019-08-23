@@ -27,7 +27,7 @@ const taskListReducer: Reducer<TaskListState, TaskListAction> = (
     case ActionType.GET_TASKLISTS_SUCCEED:
       return {
         ...state,
-        taskLists: action.payload.result.tasklists,
+        taskLists: action.payload.result,
         isLoading: false,
       };
     case ActionType.GET_TASKLISTS_FAIL:
