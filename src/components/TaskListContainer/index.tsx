@@ -1,15 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Form, Divider } from 'semantic-ui-react';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-  DroppableProvided,
-  DroppableStateSnapshot,
-  DraggingStyle,
-  NotDraggingStyle,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
@@ -48,14 +39,6 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
 
   const getListStyle = (isDraggingOver: boolean) => ({
     background: isDraggingOver ? 'lightblue' : '#FFFFFF',
-  });
-
-  const getItemStyle = (
-    isDragging: boolean,
-    draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
-  ) => ({
-    background: isDragging ? 'lightgreen' : '#FFFFFF',
-    ...draggableStyle,
   });
 
   return (
