@@ -47,22 +47,14 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   };
 
   const getListStyle = (isDraggingOver: boolean) => ({
-    background: isDraggingOver ? 'lightblue' : 'lightgrey',
-    padding: 8,
-    width: 250,
+    background: isDraggingOver ? 'lightblue' : '#FFFFFF',
   });
 
   const getItemStyle = (
     isDragging: boolean,
     draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
   ) => ({
-    padding: 16,
-    margin: `0 0 8px 0`,
-
-    // change background colour if dragging
-    background: isDragging ? 'lightgreen' : 'grey',
-
-    // styles we need to apply on draggables
+    background: isDragging ? 'lightgreen' : '#FFFFFF',
     ...draggableStyle,
   });
 
@@ -89,29 +81,13 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
                 })
                 .map((task, index) => {
                   return (
-                    <Draggable
+                    <TaskComponent
                       key={task.id}
-                      draggableId={task.id || ''}
+                      task={task}
                       index={index}
-                    >
-                      {(provided2, snapshot2) => (
-                        <div
-                          ref={provided2.innerRef}
-                          {...provided2.draggableProps}
-                          {...provided2.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot2.isDragging,
-                            provided2.draggableProps.style,
-                          )}
-                        >
-                          <TaskComponent
-                            task={task}
-                            handleOnChange={handleOnChange}
-                            handleDelete={handleDelete}
-                          />
-                        </div>
-                      )}
-                    </Draggable>
+                      handleOnChange={handleOnChange}
+                      handleDelete={handleDelete}
+                    />
                   );
                 })}
             </div>
