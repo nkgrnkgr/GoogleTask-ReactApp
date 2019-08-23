@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Input, Icon, Button, Divider } from 'semantic-ui-react';
+import { Input, Icon, Button } from 'semantic-ui-react';
 import {
   Draggable,
   DraggingStyle,
