@@ -11,6 +11,7 @@ export interface TaskListContainerProps {
   isLoading: boolean;
   handleOnChange: (task: Task) => void;
   handleDelete: (task: Task) => void;
+  handleReorder: (sourceIndex: number, destinationIndex: number) => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
@@ -18,23 +19,18 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   isLoading = false,
   handleOnChange,
   handleDelete,
+  handleReorder,
 }) => {
   if (isLoading) {
     return <Loading />;
   }
 
-  // const reorder = (tasklist: Task[], startIndex: number, endIndex: number) => {
-  //   const result = Array.from(tasklist);
-  //   const [removed] = result.splice(startIndex, 1);
-  //   result.splice(endIndex, 0, removed);
-
-  //   return result;
-  // };
-
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
-      console.log('called');
+      return;
     }
+
+    handleReorder(result.source.index, result.destination.index);
   };
 
   const getListStyle = (isDraggingOver: boolean) => ({
@@ -55,24 +51,17 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
               ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
             >
-              {taskList
-                .sort((a, b) => {
-                  const { position: positionA = '0' } = a;
-                  const { position: positionB = '0' } = b;
-
-                  return parseInt(positionA, 10) - parseInt(positionB, 10);
-                })
-                .map((task, index) => {
-                  return (
-                    <TaskComponent
-                      key={task.id}
-                      task={task}
-                      index={index}
-                      handleOnChange={handleOnChange}
-                      handleDelete={handleDelete}
-                    />
-                  );
-                })}
+              {taskList.map((task, index) => {
+                return (
+                  <TaskComponent
+                    key={task.id}
+                    task={task}
+                    index={index}
+                    handleOnChange={handleOnChange}
+                    handleDelete={handleDelete}
+                  />
+                );
+              })}
             </div>
           )}
         </Droppable>
