@@ -78,10 +78,16 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   };
 
   const handleReorderTask = (sourceIndex: number, destinationIndex: number) => {
+    // 0 の場合パラメータを省略するひつようあり
+    console.log(sourceIndex, destinationIndex);
     const sourceTaskId = taskList[sourceIndex].id || '';
     const destinationTaskId = taskList[destinationIndex].id || '';
 
     if (sourceTaskId === '' || destinationTaskId === '') {
+      return;
+    }
+
+    if (sourceIndex === destinationIndex) {
       return;
     }
 
