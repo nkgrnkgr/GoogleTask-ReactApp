@@ -37,8 +37,13 @@ const reorderTask = (
   const result = Array.from(tasklist);
   const startIndex = tasklist.findIndex(t => t.id === sourceTaskId);
   const endIndex = tasklist.findIndex(t => t.id === destinationTaskId);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+  if (startIndex > endIndex) {
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex + 1, 0, removed);
+  } else {
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+  }
 
   return result;
 };

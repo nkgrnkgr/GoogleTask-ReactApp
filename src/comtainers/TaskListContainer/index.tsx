@@ -78,24 +78,34 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   };
 
   const handleReorderTask = (sourceIndex: number, destinationIndex: number) => {
-    // 0 の場合パラメータを省略するひつようあり
-    console.log(sourceIndex, destinationIndex);
-    const sourceTaskId = taskList[sourceIndex].id || '';
-    const destinationTaskId = taskList[destinationIndex].id || '';
-
-    if (sourceTaskId === '' || destinationTaskId === '') {
-      return;
-    }
-
     if (sourceIndex === destinationIndex) {
       return;
     }
 
-    moveTaskStart({
-      tasklist: selectedTaskListId,
-      task: sourceTaskId,
-      previous: destinationTaskId,
-    });
+    console.log(destinationIndex);
+
+    const sourceTaskId = taskList[sourceIndex].id || '';
+    let destinationTaskId = '';
+
+    if (sourceIndex < destinationIndex) {
+      destinationTaskId = taskList[destinationIndex].id || '';
+    } else {
+      destinationTaskId = taskList[destinationIndex - 1].id || '';
+    }
+
+    console.log(destinationTaskId);
+    if (!destinationTaskId) {
+      moveTaskStart({
+        tasklist: selectedTaskListId,
+        task: sourceTaskId,
+      });
+    } else {
+      moveTaskStart({
+        tasklist: selectedTaskListId,
+        task: sourceTaskId,
+        previous: destinationTaskId,
+      });
+    }
   };
 
   return (
