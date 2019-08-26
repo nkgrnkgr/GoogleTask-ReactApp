@@ -8,7 +8,7 @@ import {
   deleteTask,
   moveTask,
 } from '../../actions/Task';
-import TaskListContainer from '../../components/TaskListContainer';
+import TaskListContainer from '../../components/TaskListContainer/index';
 import { CombinedState } from '../../reducers/root';
 import {
   TasksListParam,

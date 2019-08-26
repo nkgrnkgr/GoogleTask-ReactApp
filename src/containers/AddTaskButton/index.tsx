@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { insertAndGetTaskList } from '../../actions/Task';
-import AddTaskButtonComponent from '../../components/AddTaskButton';
+import AddTaskButtonComponent from '../../components/AddTaskButton/index';
 import { CombinedState } from '../../reducers/root';
 import {
   TasksInsertParam,

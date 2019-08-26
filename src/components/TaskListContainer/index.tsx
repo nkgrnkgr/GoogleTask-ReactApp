@@ -4,7 +4,8 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
-import AddTaskButton from '../../comtainers/AddTaskButton';
+import AddTaskButton from '../../containers/AddTaskButton';
+import ClearTaskButton from '../ClearTaskButton/index';
 
 export interface TaskListContainerProps {
   taskList: Task[];
@@ -37,6 +38,10 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
     background: isDraggingOver ? 'lightblue' : '#FFFFFF',
   });
 
+  if (taskList.length === 0) {
+    return <></>;
+  }
+
   return (
     <Form>
       <div>
@@ -66,6 +71,10 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           )}
         </Droppable>
       </DragDropContext>
+      <Divider />
+      <div>
+        <ClearTaskButton handleOnClick={() => {}} />
+      </div>
     </Form>
   );
 };
