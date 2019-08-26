@@ -13,11 +13,39 @@ export const initialState: TaskState = {
   isLoading: false,
 };
 
+const sortByPostion = (taskList: Task[]) => {
+  return taskList.sort((a, b) => {
+    const { position: positionA = '0' } = a;
+    const { position: positionB = '0' } = b;
+
+    return parseInt(positionA, 10) - parseInt(positionB, 10);
+  });
+};
+
 const updateTask = (taskList: Task[], task: Task) => {
   return taskList.map(c => (c.id === task.id ? task : c));
 };
 const deleteTask = (taskList: Task[], deleteTargetId: string) => {
   return taskList.filter(c => c.id !== deleteTargetId);
+};
+
+const reorderTask = (
+  tasklist: Task[],
+  sourceTaskId: string,
+  destinationTaskId: string,
+) => {
+  const result = Array.from(tasklist);
+  const startIndex = tasklist.findIndex(t => t.id === sourceTaskId);
+  const endIndex = tasklist.findIndex(t => t.id === destinationTaskId);
+  if (startIndex > endIndex) {
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex + 1, 0, removed);
+  } else {
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+  }
+
+  return result;
 };
 
 const taskReducer: Reducer<TaskState, TaskAction> = (
@@ -34,7 +62,7 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.GET_TASKLIST_SUCCEED:
       return {
         ...state,
-        taskList: action.payload.result,
+        taskList: sortByPostion(action.payload.result),
         isLoading: false,
       };
     case ActionType.GET_TASKLIST_FAIL:
@@ -77,13 +105,31 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.DELETE_TASK_START:
       return {
         ...state,
+        taskList: deleteTask(state.taskList, action.payload.task),
       };
     case ActionType.DELETE_TASK_SUCCEED:
       return {
         ...state,
-        taskList: deleteTask(state.taskList, action.payload.param.task),
       };
     case ActionType.DELETE_TASK_FAIL:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case ActionType.MOVE_TASK_START:
+      return {
+        ...state,
+        taskList: reorderTask(
+          state.taskList,
+          action.payload.task,
+          action.payload.previous || '',
+        ),
+      };
+    case ActionType.MOVE_TASK_SUCCEED:
+      return {
+        ...state,
+      };
+    case ActionType.MOVE_TASK_FAIL:
       return {
         ...state,
         error: action.payload.error,

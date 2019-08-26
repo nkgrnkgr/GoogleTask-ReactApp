@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Form, FormField, Divider } from 'semantic-ui-react';
+import { Form, Divider } from 'semantic-ui-react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
@@ -10,6 +11,7 @@ export interface TaskListContainerProps {
   isLoading: boolean;
   handleOnChange: (task: Task) => void;
   handleDelete: (task: Task) => void;
+  handleReorder: (sourceIndex: number, destinationIndex: number) => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
@@ -17,10 +19,23 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   isLoading = false,
   handleOnChange,
   handleDelete,
+  handleReorder,
 }) => {
   if (isLoading) {
     return <Loading />;
   }
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+
+    handleReorder(result.source.index, result.destination.index);
+  };
+
+  const getListStyle = (isDraggingOver: boolean) => ({
+    background: isDraggingOver ? 'lightblue' : '#FFFFFF',
+  });
 
   return (
     <Form>
@@ -28,26 +43,29 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
         <AddTaskButton />
       </div>
       <Divider />
-      <div>
-        {taskList
-          .sort((a, b) => {
-            const { position: positionA = '0' } = a;
-            const { position: positionB = '0' } = b;
-
-            return parseInt(positionA, 10) - parseInt(positionB, 10);
-          })
-          .map(task => {
-            return (
-              <FormField key={task.id}>
-                <TaskComponent
-                  task={task}
-                  handleOnChange={handleOnChange}
-                  handleDelete={handleDelete}
-                />
-              </FormField>
-            );
-          })}
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+              {taskList.map((task, index) => {
+                return (
+                  <TaskComponent
+                    key={task.id}
+                    task={task}
+                    index={index}
+                    handleOnChange={handleOnChange}
+                    handleDelete={handleDelete}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </Form>
   );
 };

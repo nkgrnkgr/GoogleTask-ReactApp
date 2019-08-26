@@ -8,6 +8,7 @@ import {
   insertAndGetTaskList,
   patchTask,
   deleteTask,
+  moveTask,
 } from '../actions/Task';
 import { getTaskListsFactory } from '../services/googleTasks/taskListApi';
 import {
@@ -15,6 +16,7 @@ import {
   insertAndGetTaskListFactory,
   patchTaskFactory,
   deleteTaskFactory,
+  moveTaskFactory,
 } from '../services/googleTasks/taskApi';
 import { Task } from '../services/googleTasks/models';
 
@@ -96,6 +98,20 @@ export function* watchDeleteTask() {
   yield takeLatest(TaskAction.DELETE_TASK_START, runDeleteTask);
 }
 
+function* runMoveTask(action: ReturnType<typeof moveTask.start>) {
+  try {
+    const api = moveTaskFactory();
+    yield call(api, action.payload);
+
+    yield put(moveTask.succeed(action.payload));
+  } catch (error) {
+    yield put(moveTask.fail(action.payload, error));
+  }
+}
+export function* watchMoveTask() {
+  yield takeLatest(TaskAction.MOVE_TASK_START, runMoveTask);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetTaskLists),
@@ -103,5 +119,6 @@ export default function* rootSaga() {
     fork(watchInsertAndGetTaskList),
     fork(watchPatchTask),
     fork(watchDeleteTask),
+    fork(watchMoveTask),
   ]);
 }
