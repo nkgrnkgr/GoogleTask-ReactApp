@@ -82,8 +82,6 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
       return;
     }
 
-    console.log(destinationIndex);
-
     const sourceTaskId = taskList[sourceIndex].id || '';
     let destinationTaskId = '';
 
@@ -93,7 +91,6 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
       destinationTaskId = taskList[destinationIndex - 1].id || '';
     }
 
-    console.log(destinationTaskId);
     if (!destinationTaskId) {
       moveTaskStart({
         tasklist: selectedTaskListId,
