@@ -134,6 +134,19 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
         ...state,
         error: action.payload.error,
       };
+    case ActionType.CLEAR_TASK_START:
+      return {
+        ...state,
+      };
+    case ActionType.CLEAR_TASK_SUCCEED:
+      return {
+        ...state,
+      };
+    case ActionType.CLEAR_TASK_FAIL:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const _: never = action;
