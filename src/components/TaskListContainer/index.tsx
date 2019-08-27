@@ -13,6 +13,7 @@ export interface TaskListContainerProps {
   handleOnChange: (task: Task) => void;
   handleDelete: (task: Task) => void;
   handleReorder: (sourceIndex: number, destinationIndex: number) => void;
+  handleClear: () => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
@@ -21,6 +22,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   handleOnChange,
   handleDelete,
   handleReorder,
+  handleClear,
 }) => {
   if (isLoading) {
     return <Loading />;
@@ -73,7 +75,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
       </DragDropContext>
       <Divider />
       <div>
-        <ClearTaskButton handleOnClick={() => {}} />
+        <ClearTaskButton handleOnClick={() => handleClear()} />
       </div>
     </Form>
   );

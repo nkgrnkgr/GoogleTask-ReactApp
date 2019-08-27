@@ -6,6 +6,7 @@ import {
   TasksListParam,
   TasksDeleteParam,
   TasksMoveParam,
+  TasksClearParam,
 } from '../services/googleTasks/taskApi';
 
 export const getTaskList = {
@@ -83,7 +84,6 @@ export const deleteTask = {
     error: true,
   }),
 };
-
 export const moveTask = {
   start: (param: TasksMoveParam) => ({
     type: ActionType.MOVE_TASK_START as typeof ActionType.MOVE_TASK_START,
@@ -96,6 +96,23 @@ export const moveTask = {
 
   fail: (param: TasksMoveParam, error: Error) => ({
     type: ActionType.MOVE_TASK_FAIL as typeof ActionType.MOVE_TASK_FAIL,
+    payload: { param, error },
+    error: true,
+  }),
+};
+
+export const clearTask = {
+  start: (param: TasksClearParam) => ({
+    type: ActionType.CLEAR_TASK_START as typeof ActionType.CLEAR_TASK_START,
+    payload: param,
+  }),
+  succeed: (param: TasksClearParam) => ({
+    type: ActionType.CLEAR_TASK_SUCCEED as typeof ActionType.CLEAR_TASK_SUCCEED,
+    payload: { param },
+  }),
+
+  fail: (param: TasksClearParam, error: Error) => ({
+    type: ActionType.CLEAR_TASK_FAIL as typeof ActionType.CLEAR_TASK_FAIL,
     payload: { param, error },
     error: true,
   }),
@@ -116,4 +133,7 @@ export type TaskAction =
   | ReturnType<typeof deleteTask.fail>
   | ReturnType<typeof moveTask.start>
   | ReturnType<typeof moveTask.succeed>
-  | ReturnType<typeof moveTask.fail>;
+  | ReturnType<typeof moveTask.fail>
+  | ReturnType<typeof clearTask.start>
+  | ReturnType<typeof clearTask.succeed>
+  | ReturnType<typeof clearTask.fail>;
