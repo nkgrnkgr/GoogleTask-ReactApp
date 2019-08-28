@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Task } from '../../services/googleTasks/models';
 import {
   getTaskList,
+  insertAndGetTaskList,
   patchTask,
   deleteTask,
   moveTask,
@@ -17,6 +18,7 @@ import {
   TasksDeleteParam,
   TasksMoveParam,
   TasksClearParam,
+  TasksInsertParam,
 } from '../../services/googleTasks/taskApi';
 
 interface StateProps {
@@ -27,6 +29,10 @@ interface StateProps {
 
 interface DispatchProps {
   getTaskListStart: (param: TasksListParam) => void;
+  insertAndGetTaskListStart: (
+    paramForInsert: TasksInsertParam,
+    paramForList: TasksListParam,
+  ) => void;
   patchTaskStart: (param: TasksPatchParam) => void;
   deleteTaskStart: (param: TasksDeleteParam) => void;
   moveTaskStart: (param: TasksMoveParam) => void;
@@ -48,6 +54,10 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators(
     {
       getTaskListStart: (param: TasksListParam) => getTaskList.start(param),
+      insertAndGetTaskListStart: (
+        paramForInsert: TasksInsertParam,
+        paramForList: TasksListParam,
+      ) => insertAndGetTaskList.start(paramForInsert, paramForList),
       patchTaskStart: (param: TasksPatchParam) => patchTask.start(param),
       deleteTaskStart: (param: TasksDeleteParam) => deleteTask.start(param),
       moveTaskStart: (param: TasksMoveParam) => moveTask.start(param),
@@ -61,6 +71,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
 
 const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   getTaskListStart,
+  insertAndGetTaskListStart,
   patchTaskStart,
   deleteTaskStart,
   moveTaskStart,
@@ -74,6 +85,13 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
       getTaskListStart({ tasklist: selectedTaskListId });
     }
   }, [selectedTaskListId]);
+
+  const handleInsertTask = () => {
+    insertAndGetTaskListStart(
+      { tasklist: selectedTaskListId, title: '' },
+      { tasklist: selectedTaskListId },
+    );
+  };
 
   const handleOnChangeTask = (task: Task) => {
     patchTaskStart({
@@ -127,6 +145,7 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
     <TaskListContainer
       taskList={taskList}
       isLoading={isLoading}
+      handleInsert={handleInsertTask}
       handleOnChange={handleOnChangeTask}
       handleDelete={handleDeleteTask}
       handleReorder={handleReorderTask}
