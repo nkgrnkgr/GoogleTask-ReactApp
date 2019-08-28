@@ -76,6 +76,24 @@ export const moveTaskFactory = () => {
   return moveTask;
 };
 
+export const clearAndGetTaskListFactory = () => {
+  const clearAndGetTaskList = async (
+    paramForClear: TasksClearParam,
+    paramForList: TasksListParam,
+  ) => {
+    try {
+      await gapi.client.tasks.tasks.clear(paramForClear);
+      const response = await gapi.client.tasks.tasks.list(paramForList);
+
+      return response.result.items;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  return clearAndGetTaskList;
+};
+
 interface StandardParameters {
   alt?: 'JSON';
   fields?: string;
