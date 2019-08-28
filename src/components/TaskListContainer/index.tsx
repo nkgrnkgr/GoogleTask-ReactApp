@@ -4,22 +4,27 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
-import AddTaskButton from '../../comtainers/AddTaskButton';
+import AddTaskButton from '../AddTaskButton';
+import ClearTaskButton from '../ClearTaskButton/index';
 
 export interface TaskListContainerProps {
   taskList: Task[];
   isLoading: boolean;
+  handleInsert: () => void;
   handleOnChange: (task: Task) => void;
   handleDelete: (task: Task) => void;
   handleReorder: (sourceIndex: number, destinationIndex: number) => void;
+  handleClear: () => void;
 }
 
 const TaskListContainer: FC<TaskListContainerProps> = ({
   taskList,
   isLoading = false,
+  handleInsert,
   handleOnChange,
   handleDelete,
   handleReorder,
+  handleClear,
 }) => {
   if (isLoading) {
     return <Loading />;
@@ -37,10 +42,14 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
     background: isDraggingOver ? 'lightblue' : '#FFFFFF',
   });
 
+  if (taskList.length === 0) {
+    return <></>;
+  }
+
   return (
     <Form>
       <div>
-        <AddTaskButton />
+        <AddTaskButton handleOnClick={() => handleInsert()} />
       </div>
       <Divider />
       <DragDropContext onDragEnd={onDragEnd}>
@@ -66,6 +75,10 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           )}
         </Droppable>
       </DragDropContext>
+      <Divider />
+      <div>
+        <ClearTaskButton handleOnClick={() => handleClear()} />
+      </div>
     </Form>
   );
 };

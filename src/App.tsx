@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Button, Divider } from 'semantic-ui-react';
-import TaskListSelection from './comtainers/TaskListSelection/index';
-import TaskListContainer from './comtainers/TaskListContainer/index';
+import TaskListSelection from './containers/TaskListSelection/index';
+import TaskListContainer from './containers/TaskListContainer/index';
 import GoogleApiConfig from './GoogleApiConfig';
 
 const App: React.FC = () => {
+  const [isSignedIn, setSignedIn] = useState(false);
+
   const initClient = () => {
     gapi.client.init({
       apiKey: GoogleApiConfig.API_KEY,
@@ -23,13 +25,23 @@ const App: React.FC = () => {
     gapi.load('client:auth2', initClient);
   }, []);
 
+  useEffect(() => {
+    if (gapi.auth2) {
+      gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
+        setSignedIn(true);
+      });
+    }
+  });
+
   return (
     <div className="App">
       <header className="App-header">
         <h2>Google Tasks Client</h2>
-        <Button positive onClick={() => handleClick()}>
-          SignIn
-        </Button>
+        {!isSignedIn && (
+          <Button positive onClick={() => handleClick()}>
+            SignIn
+          </Button>
+        )}
         <Divider />
         <TaskListSelection />
         <Divider />
