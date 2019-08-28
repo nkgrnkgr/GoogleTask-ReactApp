@@ -7,7 +7,7 @@ import {
   patchTask,
   deleteTask,
   moveTask,
-  clearTask,
+  clearAndGetTaskList,
 } from '../../actions/Task';
 import TaskListContainer from '../../components/TaskListContainer/index';
 import { CombinedState } from '../../reducers/root';
@@ -30,7 +30,10 @@ interface DispatchProps {
   patchTaskStart: (param: TasksPatchParam) => void;
   deleteTaskStart: (param: TasksDeleteParam) => void;
   moveTaskStart: (param: TasksMoveParam) => void;
-  clearTaskStart: (param: TasksClearParam) => void;
+  clearAndGetTaskListStart: (
+    paramForClear: TasksClearParam,
+    paramForList: TasksListParam,
+  ) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -48,7 +51,10 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
       patchTaskStart: (param: TasksPatchParam) => patchTask.start(param),
       deleteTaskStart: (param: TasksDeleteParam) => deleteTask.start(param),
       moveTaskStart: (param: TasksMoveParam) => moveTask.start(param),
-      clearTaskStart: (param: TasksClearParam) => clearTask.start(param),
+      clearAndGetTaskListStart: (
+        paramForClear: TasksClearParam,
+        paramForList: TasksListParam,
+      ) => clearAndGetTaskList.start(paramForClear, paramForList),
     },
     dispatch,
   );
@@ -58,7 +64,7 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   patchTaskStart,
   deleteTaskStart,
   moveTaskStart,
-  clearTaskStart,
+  clearAndGetTaskListStart,
   taskList,
   isLoading = false,
   selectedTaskListId,
@@ -111,7 +117,10 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
   };
 
   const handleClearTask = () => {
-    clearTaskStart({ tasklist: selectedTaskListId });
+    clearAndGetTaskListStart(
+      { tasklist: selectedTaskListId },
+      { tasklist: selectedTaskListId },
+    );
   };
 
   return (

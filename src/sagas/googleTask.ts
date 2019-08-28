@@ -9,7 +9,7 @@ import {
   patchTask,
   deleteTask,
   moveTask,
-  clearTask,
+  clearAndGetTaskList,
 } from '../actions/Task';
 import { getTaskListsFactory } from '../services/googleTasks/taskListApi';
 import {
@@ -18,7 +18,7 @@ import {
   patchTaskFactory,
   deleteTaskFactory,
   moveTaskFactory,
-  clearTaskFactory,
+  clearAndGetTaskListFactory,
 } from '../services/googleTasks/taskApi';
 import { Task } from '../services/googleTasks/models';
 
@@ -114,18 +114,30 @@ export function* watchMoveTask() {
   yield takeLatest(TaskAction.MOVE_TASK_START, runMoveTask);
 }
 
-function* runClearTask(action: ReturnType<typeof clearTask.start>) {
+function* runClearAndGetTaskList(
+  action: ReturnType<typeof clearAndGetTaskList.start>,
+) {
   try {
-    const api = clearTaskFactory();
-    yield call(api, action.payload);
+    const api = clearAndGetTaskListFactory();
+    const { paramForClear, paramForList } = action.payload;
+    const result: Task[] = yield call(api, paramForClear, paramForList);
 
-    yield put(clearTask.succeed(action.payload));
+    yield put(clearAndGetTaskList.succeed(paramForClear, paramForList, result));
   } catch (error) {
-    yield put(clearTask.fail(action.payload, error));
+    yield put(
+      clearAndGetTaskList.fail(
+        action.payload.paramForClear,
+        action.payload.paramForList,
+        error,
+      ),
+    );
   }
 }
-export function* watchClearTask() {
-  yield takeLatest(TaskAction.MOVE_TASK_START, runMoveTask);
+export function* watchClearAndGetTaskList() {
+  yield takeLatest(
+    TaskAction.CLEAR_AND_GET_TASK_LIST_START,
+    runClearAndGetTaskList,
+  );
 }
 
 export default function* rootSaga() {
@@ -136,6 +148,6 @@ export default function* rootSaga() {
     fork(watchPatchTask),
     fork(watchDeleteTask),
     fork(watchMoveTask),
-    fork(watchClearTask),
+    fork(watchClearAndGetTaskList),
   ]);
 }

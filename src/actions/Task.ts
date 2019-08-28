@@ -101,19 +101,27 @@ export const moveTask = {
   }),
 };
 
-export const clearTask = {
-  start: (param: TasksClearParam) => ({
-    type: ActionType.CLEAR_TASK_START as typeof ActionType.CLEAR_TASK_START,
-    payload: param,
+export const clearAndGetTaskList = {
+  start: (paramForClear: TasksClearParam, paramForList: TasksListParam) => ({
+    type: ActionType.CLEAR_AND_GET_TASK_LIST_START as typeof ActionType.CLEAR_AND_GET_TASK_LIST_START,
+    payload: { paramForClear, paramForList },
   }),
-  succeed: (param: TasksClearParam) => ({
-    type: ActionType.CLEAR_TASK_SUCCEED as typeof ActionType.CLEAR_TASK_SUCCEED,
-    payload: { param },
+  succeed: (
+    paramForClear: TasksClearParam,
+    paramForList: TasksListParam,
+    result: Task[],
+  ) => ({
+    type: ActionType.CLEAR_AND_GET_TASK_LIST_SUCCEED as typeof ActionType.CLEAR_AND_GET_TASK_LIST_SUCCEED,
+    payload: { paramForClear, paramForList, result },
   }),
 
-  fail: (param: TasksClearParam, error: Error) => ({
-    type: ActionType.CLEAR_TASK_FAIL as typeof ActionType.CLEAR_TASK_FAIL,
-    payload: { param, error },
+  fail: (
+    paramForClear: TasksClearParam,
+    paramForList: TasksListParam,
+    error: Error,
+  ) => ({
+    type: ActionType.CLEAR_AND_GET_TASK_LIST_FAIL as typeof ActionType.CLEAR_AND_GET_TASK_LIST_FAIL,
+    payload: { paramForClear, paramForList, error },
     error: true,
   }),
 };
@@ -134,6 +142,6 @@ export type TaskAction =
   | ReturnType<typeof moveTask.start>
   | ReturnType<typeof moveTask.succeed>
   | ReturnType<typeof moveTask.fail>
-  | ReturnType<typeof clearTask.start>
-  | ReturnType<typeof clearTask.succeed>
-  | ReturnType<typeof clearTask.fail>;
+  | ReturnType<typeof clearAndGetTaskList.start>
+  | ReturnType<typeof clearAndGetTaskList.succeed>
+  | ReturnType<typeof clearAndGetTaskList.fail>;
