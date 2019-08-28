@@ -79,7 +79,7 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.INSERT_AND_GET_TASKLIST_SUCCEED:
       return {
         ...state,
-        taskList: action.payload.result,
+        taskList: sortByPostion(action.payload.result),
         isLoading: false,
       };
     case ActionType.INSERT_AND_GET_TASKLIST_FAIL:
@@ -134,17 +134,21 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
         ...state,
         error: action.payload.error,
       };
-    case ActionType.CLEAR_TASK_START:
+    case ActionType.CLEAR_AND_GET_TASK_LIST_START:
       return {
         ...state,
+        isLoading: true,
       };
-    case ActionType.CLEAR_TASK_SUCCEED:
+    case ActionType.CLEAR_AND_GET_TASK_LIST_SUCCEED:
       return {
         ...state,
+        taskList: sortByPostion(action.payload.result),
+        isLoading: false,
       };
-    case ActionType.CLEAR_TASK_FAIL:
+    case ActionType.CLEAR_AND_GET_TASK_LIST_FAIL:
       return {
         ...state,
+        isLoading: false,
         error: action.payload.error,
       };
     default: {
