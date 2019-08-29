@@ -1,0 +1,11 @@
+.SingInPage {
+  text-align: center;
+}
+
+.SingInPage-header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
