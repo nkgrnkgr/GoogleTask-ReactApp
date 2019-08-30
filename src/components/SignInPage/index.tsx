@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
+import { Redirect } from 'react-router';
 import GoogleApiConfig from '../../GoogleApiConfig';
 import './index.css';
 
-const SignInPage: React.FC = () => {
+interface Props {
+  isSignedIn: boolean;
+  signIn: () => void;
+}
+
+const SignInPage: React.FC<Props> = ({ isSignedIn, signIn }) => {
   const initClient = () => {
-    gapi.client.init({
-      apiKey: GoogleApiConfig.API_KEY,
-      clientId: GoogleApiConfig.CLIENT_ID,
-      discoveryDocs: GoogleApiConfig.DISCOVERY_DOCS,
-      scope: GoogleApiConfig.SCOPES,
-    });
+    gapi.client
+      .init({
+        apiKey: GoogleApiConfig.API_KEY,
+        clientId: GoogleApiConfig.CLIENT_ID,
+        discoveryDocs: GoogleApiConfig.DISCOVERY_DOCS,
+        scope: GoogleApiConfig.SCOPES,
+      })
+      .then(() => {
+        gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
+          signIn();
+        });
+      });
   };
 
   useEffect(() => {
     gapi.load('client:auth2', initClient);
   }, []);
+
+  if (isSignedIn) {
+    return <Redirect to="/tasks" />;
+  }
 
   return (
     <div className="SignInPage">

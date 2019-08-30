@@ -8,6 +8,12 @@ export const application = {
     type: ActionType.SELECT_TASKLIST,
     payload: param,
   }),
+  signIn: () => ({
+    type: ActionType.SIGN_IN,
+  }),
+  signOut: () => ({
+    type: ActionType.SIGN_OUT,
+  }),
 };
 
 export type ApplicationAction = ReturnType<typeof application.selectTaskList>;
