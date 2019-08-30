@@ -4,9 +4,11 @@ import * as ActionType from '../actions/ApplicationConstants';
 
 export interface ApplicationState {
   selectedTaskListId: string;
+  isSignIned: boolean;
 }
 export const initialState: ApplicationState = {
   selectedTaskListId: '',
+  isSignIned: false,
 };
 
 const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
@@ -18,6 +20,16 @@ const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
       return {
         ...state,
         selectedTaskListId: action.payload.selectedTaskListId,
+      };
+    case ActionType.SIGN_IN:
+      return {
+        ...state,
+        isSignIned: true,
+      };
+    case ActionType.SIGN_OUT:
+      return {
+        ...state,
+        isSignIned: false,
       };
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
