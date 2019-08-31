@@ -4,9 +4,13 @@ import * as ActionType from '../actions/ApplicationConstants';
 
 export interface ApplicationState {
   selectedTaskListId: string;
+  isGapiClientInitialized: boolean;
+  isSignIned: boolean;
 }
 export const initialState: ApplicationState = {
   selectedTaskListId: '',
+  isGapiClientInitialized: false,
+  isSignIned: false,
 };
 
 const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
@@ -18,6 +22,21 @@ const applicationReducer: Reducer<ApplicationState, ApplicationAction> = (
       return {
         ...state,
         selectedTaskListId: action.payload.selectedTaskListId,
+      };
+    case ActionType.INITIALIZE_GAPI_CLIENT:
+      return {
+        ...state,
+        isGapiClientInitialized: true,
+      };
+    case ActionType.SIGN_IN:
+      return {
+        ...state,
+        isSignIned: true,
+      };
+    case ActionType.SIGN_OUT:
+      return {
+        ...state,
+        isSignIned: false,
       };
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
