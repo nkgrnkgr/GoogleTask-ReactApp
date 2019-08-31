@@ -8,6 +8,9 @@ export const application = {
     type: ActionType.SELECT_TASKLIST,
     payload: param,
   }),
+  initializeGapiClient: () => ({
+    type: ActionType.INITIALIZE_GAPI_CLIENT,
+  }),
   signIn: () => ({
     type: ActionType.SIGN_IN,
   }),

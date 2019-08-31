@@ -1,46 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { FC } from 'react';
 import './App.css';
 import { Divider } from 'semantic-ui-react';
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
 import TaskListSelection from './containers/TaskListSelection/index';
 import TaskListContainer from './containers/TaskListContainer/index';
-import GoogleApiConfig from './GoogleApiConfig';
 import SignInPage from './containers/SignInPage/index';
-import Auth from './containers/Auth/index';
+import AuthContainer from './containers/Auth/index';
+import GapiClientInitializer from './containers/GapiClientInitializer/index';
 
-const App: React.FC = () => {
-  const initClient = () => {
-    gapi.client.init({
-      apiKey: GoogleApiConfig.API_KEY,
-      clientId: GoogleApiConfig.CLIENT_ID,
-      discoveryDocs: GoogleApiConfig.DISCOVERY_DOCS,
-      scope: GoogleApiConfig.SCOPES,
-    });
-  };
-
-  useEffect(() => {
-    gapi.load('client:auth2', initClient);
-  }, []);
-
+const App: FC = () => {
   return (
     <BrowserRouter>
-      <Route exact path="/" component={SignInPage} />
-      <Route
-        exact
-        path="/tasks"
-        render={() => (
-          <Auth>
-            <div className="App">
-              <header className="App-header">
-                <TaskListSelection />
-                <Divider />
-                <TaskListContainer />
-              </header>
-            </div>
-          </Auth>
-        )}
-      />
+      <GapiClientInitializer>
+        <Route exact path="/signIn" component={SignInPage} />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <AuthContainer>
+              <div className="App">
+                <header className="App-header">
+                  <TaskListSelection />
+                  <Divider />
+                  <TaskListContainer />
+                </header>
+              </div>
+            </AuthContainer>
+          )}
+        />
+      </GapiClientInitializer>
     </BrowserRouter>
   );
 };

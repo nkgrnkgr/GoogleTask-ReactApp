@@ -1,41 +1,32 @@
 import React, { FC } from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { application } from '../../actions/Application';
 import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
+  isGapiClientInitialized: boolean;
   isSignIned: boolean;
 }
 
-interface DispatchProps {
-  signIn: () => void;
-}
-
-type EnhancemembersProps = StateProps & DispatchProps;
-
 const mapStateTopProps = (state: CombinedState): StateProps => ({
+  isGapiClientInitialized: state.application.isGapiClientInitialized,
   isSignIned: state.application.isSignIned,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
-  bindActionCreators(
-    {
-      signIn: () => application.signIn(),
-    },
-    dispatch,
-  );
+const AuthContainer: FC<StateProps> = ({
+  isGapiClientInitialized,
+  isSignIned,
+  children,
+}) => {
+  if (!isGapiClientInitialized) {
+    return <>Google Api Initializing...</>;
+  }
 
-const Auth: FC<EnhancemembersProps> = ({ isSignIned, children }) => {
   if (!isSignIned) {
-    return <Redirect to="/" />;
+    return <Redirect to="/signIn" />;
   }
 
   return <>{children}</>;
 };
 
-export default connect(
-  mapStateTopProps,
-  mapDispatchToProps,
-)(Auth);
+export default connect(mapStateTopProps)(AuthContainer);
