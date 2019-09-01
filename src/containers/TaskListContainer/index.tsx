@@ -114,10 +114,12 @@ const TaskListContainerContainer: FC<EnhancemembersProps> = ({
     const sourceTaskId = taskList[sourceIndex].id || '';
     let destinationTaskId = '';
 
-    if (sourceIndex < destinationIndex) {
-      destinationTaskId = taskList[destinationIndex].id || '';
-    } else {
-      destinationTaskId = taskList[destinationIndex - 1].id || '';
+    if (destinationIndex !== 0) {
+      if (sourceIndex < destinationIndex) {
+        destinationTaskId = taskList[destinationIndex].id || '';
+      } else {
+        destinationTaskId = taskList[destinationIndex - 1].id || '';
+      }
     }
 
     if (!destinationTaskId) {
