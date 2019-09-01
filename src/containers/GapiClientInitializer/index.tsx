@@ -4,6 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { application } from '../../actions/Application';
 import { CombinedState } from '../../reducers/root';
 import GoogleApiConfig from '../../GoogleApiConfig';
+import { User } from '../../reducers/ApplicationReducer';
 
 interface StateProps {
   isSignIned: boolean;
@@ -11,8 +12,9 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  signIn: () => void;
   initializeGapiClient: () => void;
+  signIn: () => void;
+  setUpUser: (user: User) => void;
 }
 
 type EnhancemembersProps = StateProps & DispatchProps;
@@ -27,6 +29,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
     {
       initializeGapiClient: () => application.initializeGapiClient(),
       signIn: () => application.signIn(),
+      setUpUser: (user: User) => application.setUpUser(user),
     },
     dispatch,
   );
@@ -35,7 +38,17 @@ const GapiClientInitializer: React.FC<EnhancemembersProps> = ({
   initializeGapiClient,
   signIn,
   children,
+  setUpUser,
 }) => {
+  const signInSetUp = () => {
+    initializeGapiClient();
+    signIn();
+    const user = gapi.auth2.getAuthInstance().currentUser.get();
+    setUpUser({
+      name: user.getBasicProfile().getName(),
+      imageUrl: user.getBasicProfile().getImageUrl(),
+    });
+  };
   const initClient = () => {
     gapi.client
       .init({
@@ -46,13 +59,11 @@ const GapiClientInitializer: React.FC<EnhancemembersProps> = ({
       })
       .then(() => {
         gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
-          initializeGapiClient();
-          signIn();
+          signInSetUp();
         });
 
         if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-          initializeGapiClient();
-          signIn();
+          signInSetUp();
         } else {
           initializeGapiClient();
         }

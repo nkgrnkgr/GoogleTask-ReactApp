@@ -3,6 +3,7 @@ import './App.css';
 import { Divider } from 'semantic-ui-react';
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
+import Header from './containers/Header/index';
 import TaskListSelection from './containers/TaskListSelection/index';
 import TaskListContainer from './containers/TaskListContainer/index';
 import SignInPage from './containers/SignInPage/index';
@@ -19,13 +20,11 @@ const App: FC = () => {
           path="/"
           render={() => (
             <AuthContainer>
-              <div className="App">
-                <header className="App-header">
-                  <TaskListSelection />
-                  <Divider />
-                  <TaskListContainer />
-                </header>
-              </div>
+              <Header />
+              <Divider hidden />
+              <TaskListSelection />
+              <Divider hidden />
+              <TaskListContainer />
             </AuthContainer>
           )}
         />
