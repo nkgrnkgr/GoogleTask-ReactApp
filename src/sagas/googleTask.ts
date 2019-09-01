@@ -1,4 +1,4 @@
-import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest, delay } from 'redux-saga/effects';
 
 import * as TaskListAction from '../actions/TaskListConstants';
 import * as TaskAction from '../actions/TaskConstants';
@@ -74,6 +74,7 @@ export function* watchInsertAndGetTaskList() {
 
 function* runPatchTask(action: ReturnType<typeof patchTask.start>) {
   try {
+    yield delay(500);
     const api = patchTaskFactory();
     const task: Task = yield call(api, action.payload);
 
