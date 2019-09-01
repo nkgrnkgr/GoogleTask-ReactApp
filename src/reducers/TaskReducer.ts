@@ -91,6 +91,11 @@ const taskReducer: Reducer<TaskState, TaskAction> = (
     case ActionType.PATCH_TASK_START:
       return {
         ...state,
+        taskList: updateTask(state.taskList, {
+          id: action.payload.task,
+          title: action.payload.title,
+          status: action.payload.status,
+        }),
       };
     case ActionType.PATCH_TASK_SUCCEED:
       return {
