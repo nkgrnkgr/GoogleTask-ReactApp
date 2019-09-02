@@ -1,11 +1,18 @@
-## Google Tasks Client
+<p align="center"> <a href=""> <img alt="babel" src="https://cdn1.imggmi.com/uploads/2019/9/2/48e5eb2de6e851b367e18bac35d793b7-full.png" width="546"> </a> </p>
 
-build by
+<p align="center">
+<img src="https://api.netlify.com/api/v1/badges/831b3983-4799-4ecb-88a2-67b6339ce860/deploy-status" alt="netlify" />
+</p>
+
+<h1 align="center">Google Tasks Client</h1>
+
+## build by
 
 - React
 - TypeScript
 - Redux
 - Redux-Saga
+- Semantic-UI React
 
 ## How To Start
 
