@@ -7,6 +7,7 @@
         "name": "css-module-types"
       }
     ],
+    "typeRoots": ["types", "node_modules/@types"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

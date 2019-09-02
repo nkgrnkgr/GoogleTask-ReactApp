@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Loader, Placeholder } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 
 interface LoadingProps {
   isInverted?: boolean;
