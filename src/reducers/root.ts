@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import application, { ApplicationState } from './Application';
+import application, { ApplicationState } from './ApplicationReducer';
 import taskList, { TaskListState } from './TaskListReducer';
 import task, { TaskState } from './TaskReducer';
 
