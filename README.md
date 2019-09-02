@@ -1,4 +1,4 @@
-<p align="center"> <a href=""> <img alt="GoogleTasksClient" style="width: 300px" src="https://cdn1.imggmi.com/uploads/2019/9/2/48e5eb2de6e851b367e18bac35d793b7-full.png" > </a> </p>
+<p align="center"> <a href=""> <img alt="GoogleTasksClient" width="20%" src="https://cdn1.imggmi.com/uploads/2019/9/2/48e5eb2de6e851b367e18bac35d793b7-full.png" > </a> </p>
 
 <h1 align="center">Google Tasks Client</h1>
 
