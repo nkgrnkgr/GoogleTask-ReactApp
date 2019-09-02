@@ -9,6 +9,7 @@ import TaskListContainer from './containers/TaskListContainer/index';
 import SignInPage from './containers/SignInPage/index';
 import AuthContainer from './containers/Auth/index';
 import GapiClientInitializer from './containers/GapiClientInitializer/index';
+import HtmlTitle from './components/HtmlTitle/index';
 
 const App: FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: FC = () => {
           path="/"
           render={() => (
             <AuthContainer>
+              <HtmlTitle title="Tasks" />
               <Header />
               <Divider hidden />
               <TaskListSelection />
