@@ -3,6 +3,7 @@ import { Button, Header } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import './index.css';
 import logo from '../../images/_logo.svg';
+import HtmlTitle from '../HtmlTitle/index';
 
 interface Props {
   isSignedIn: boolean;
@@ -14,14 +15,20 @@ const SignInPage: React.FC<Props> = ({ isSignedIn }) => {
   }
 
   return (
-    <div className="SignInPage">
-      <header className="SingInPage-header">
-        <Header as="h1" image={logo} content="Google Tasks Client" />
-        <Button positive onClick={() => gapi.auth2.getAuthInstance().signIn()}>
-          SignIn
-        </Button>
-      </header>
-    </div>
+    <>
+      <HtmlTitle title="Google Tasks Client" />
+      <div className="SignInPage">
+        <header className="SingInPage-header">
+          <Header as="h1" image={logo} content="Google Tasks Client" />
+          <Button
+            positive
+            onClick={() => gapi.auth2.getAuthInstance().signIn()}
+          >
+            SignIn
+          </Button>
+        </header>
+      </div>
+    </>
   );
 };
 

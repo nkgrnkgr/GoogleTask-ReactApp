@@ -50,7 +50,7 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
   }
 
   if (taskLists.length === 0) {
-    return <div></div>;
+    return <></>;
   }
 
   const options = createOptionsFromTaskLists(taskLists);
