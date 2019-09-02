@@ -1,9 +1,9 @@
 import {
   TaskList as TaskListsResource,
   Task as TasksResource,
-} from './services/googleTasks/models';
+} from '../services/googleTasks/models';
 
-import { ListResult } from './services/googleTasks/basicApi';
+import { ListResult } from '../services/googleTasks/basicApi';
 
 import {
   TasksListParam,
@@ -14,7 +14,7 @@ import {
   TasksMoveParam,
   TasksPatchParam,
   TasksUpdateParam,
-} from './services/googleTasks/taskApi';
+} from '../services/googleTasks/taskApi';
 
 import {
   TaskListsListParam,
@@ -23,7 +23,7 @@ import {
   TaskListsUpdateParam,
   TaskListsDeleteParam,
   TaskListsPatchParam,
-} from './services/googleTasks/taskListApi';
+} from '../services/googleTasks/taskListApi';
 
 declare interface Gapi {
   load: Function;

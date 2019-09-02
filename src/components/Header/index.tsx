@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Menu, Sticky, Image, Dropdown } from 'semantic-ui-react';
 import { User } from '../../reducers/ApplicationReducer';
+import logo from '../../images/_logo.svg';
 
 const userWithIcon = (imageUrl: string, name: string) => (
   <span>
@@ -18,8 +19,9 @@ const header: FC<HeaderProps> = ({ user, handleOnClickSignOut }) => (
   <header>
     <Sticky>
       <Menu>
-        <Menu.Item name="Home" active>
-          Home
+        <Menu.Item name="Home" header>
+          <img src={logo} alt="logo" />
+          Google Task Client
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
@@ -33,7 +35,6 @@ const header: FC<HeaderProps> = ({ user, handleOnClickSignOut }) => (
               </Dropdown.Menu>
             </Dropdown>
           </Menu.Item>
-          <Menu.Item>Help</Menu.Item>
         </Menu.Menu>
       </Menu>
     </Sticky>
