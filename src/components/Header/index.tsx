@@ -21,7 +21,7 @@ const header: FC<HeaderProps> = ({ user, handleOnClickSignOut }) => (
       <Menu>
         <Menu.Item name="Home" header>
           <img src={logo} alt="logo" />
-          Google Task Client
+          Google Tasks Client
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
