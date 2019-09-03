@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Image, Divider } from 'semantic-ui-react';
+import { Header, Image, Divider } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import './index.css';
 import logo from '../../images/_logo.svg';
