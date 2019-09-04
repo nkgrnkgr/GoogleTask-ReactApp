@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Header, Image, Divider } from 'semantic-ui-react';
-import { Redirect } from 'react-router';
+import { Header, Image, Divider } from 'semantic-ui-react';
+import { Redirect, RouteComponentProps, Route } from 'react-router';
 import './index.css';
 import logo from '../../images/_logo.svg';
 import googleSignInButton from '../../images/btn_google_signin_dark_normal_web@2x.png';
@@ -10,9 +10,21 @@ interface Props {
   isSignedIn: boolean;
 }
 
-const SignInPage: React.FC<Props> = ({ isSignedIn }) => {
+type ReactRouterProps = RouteComponentProps;
+
+type EnhancedProps = Props & ReactRouterProps;
+
+const SignInPage: React.FC<EnhancedProps> = ({ isSignedIn, location }) => {
   if (isSignedIn) {
-    return <Redirect to="/" />;
+    return (
+      <Route
+        exact
+        path="/"
+        render={() => (
+          <Redirect to={`/${location.search ? `/${location.search}` : ''}`} />
+        )}
+      />
+    );
   }
 
   return (
