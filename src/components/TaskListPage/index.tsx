@@ -21,7 +21,7 @@ const SignInPage: React.FC<EnhancedProps> = props => {
       <HtmlTitle title="Tasks" />
       <Header />
       <Divider hidden />
-      <TaskListSelection />
+      <TaskListSelection {...props} />
       <Divider hidden />
       <TaskListContainer />
     </AuthContainer>

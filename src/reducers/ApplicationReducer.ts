@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+import queryString, { ParsedQuery } from 'query-string';
 import { ApplicationAction } from '../actions/Application';
 import * as ActionType from '../actions/ApplicationConstants';
 
@@ -12,8 +13,21 @@ export interface ApplicationState {
   isSignIned: boolean;
   user: User;
 }
+
+const getTasklistId = () => {
+  const params: ParsedQuery<string> = queryString.parse(window.location.search);
+
+  const { tasklist } = params;
+
+  if (typeof tasklist === 'string') {
+    return tasklist;
+  }
+
+  return '';
+};
+
 export const initialState: ApplicationState = {
-  selectedTaskListId: '',
+  selectedTaskListId: getTasklistId(),
   isGapiClientInitialized: false,
   isSignIned: false,
   user: {

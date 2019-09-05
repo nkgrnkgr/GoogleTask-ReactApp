@@ -7,6 +7,7 @@ export interface TaskListSelectionProps {
   taskLists: TaskList[];
   isLoading: boolean;
   handleOnChange: (selectedTaskListId: string) => void;
+  defaultSelectedTaskListId: string;
 }
 
 const createOptionsFromTaskLists = (taskLists: TaskList[] = []) => {
@@ -39,11 +40,21 @@ const findTaskIdFromSelectedValue = (
   return '';
 };
 
-// https://react.semantic-ui.com/modules/dropdown/#types-selection
+const findTaskListTitleFromSelectedId = (id: string, taskLists: TaskList[]) => {
+  const taskList = taskLists.find(list => list.id === id);
+
+  if (taskList) {
+    return taskList.title || '';
+  }
+
+  return '';
+};
+
 const TaskListSelection: FC<TaskListSelectionProps> = ({
   taskLists,
   isLoading,
   handleOnChange,
+  defaultSelectedTaskListId,
 }) => {
   if (isLoading) {
     return <Loading />;
@@ -52,6 +63,11 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
   if (taskLists.length === 0) {
     return <></>;
   }
+
+  const selectedTaskListTitle = findTaskListTitleFromSelectedId(
+    defaultSelectedTaskListId,
+    taskLists,
+  );
 
   const options = createOptionsFromTaskLists(taskLists);
 
@@ -75,6 +91,7 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
         onChange={(event: SyntheticEvent, data: DropdownProps) =>
           handoleOnChangeTaskList(data)
         }
+        defaultValue={selectedTaskListTitle}
       />
     </div>
   );
