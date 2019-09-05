@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, RouteComponentProps, Route } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
@@ -27,18 +27,12 @@ const AuthContainer: FC<EnhancedProps> = ({
     return <>Google Api Initializing...</>;
   }
 
+  const redirectUrl = location.search
+    ? `/signin/${location.search}`
+    : '/signIn';
+
   if (!isSignIned) {
-    return (
-      <Route
-        exact
-        path="/signin"
-        render={() => (
-          <Redirect
-            to={`/signin${location.search ? `/${location.search}` : ''}`}
-          />
-        )}
-      />
-    );
+    return <Redirect to={redirectUrl} />;
   }
 
   return <>{children}</>;
