@@ -5,7 +5,7 @@ import AuthContainer from '../../containers/Auth/index';
 import HtmlTitle from '../HtmlTitle';
 import TaskListSelection from '../../containers/TaskListSelection';
 import TaskListContainer from '../../containers/TaskListContainer';
-import Header from '../../containers/Header/index';
+import { PageHeader } from '../PageHeader/Index';
 
 interface SignInPageProps {
   isSignedIn: boolean;
@@ -19,7 +19,7 @@ const SignInPage: React.FC<EnhancedProps> = props => {
   return (
     <AuthContainer {...props}>
       <HtmlTitle title="Tasks" />
-      <Header />
+      <PageHeader />
       <Divider hidden />
       <TaskListSelection {...props} />
       <Divider hidden />
