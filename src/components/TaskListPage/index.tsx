@@ -1,29 +1,37 @@
+import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import React from 'react';
-import { Divider } from 'semantic-ui-react';
-import { RouteComponentProps } from 'react-router';
 import AuthContainer from '../../containers/Auth/index';
-import HtmlTitle from '../HtmlTitle';
-import TaskListSelection from '../../containers/TaskListSelection';
 import TaskListContainer from '../../containers/TaskListContainer';
+import TaskListSelection from '../../containers/TaskListSelection';
+import HtmlTitle from '../HtmlTitle';
 import { PageHeader } from '../PageHeader/Index';
+import { ScrollTop } from '../ScrollTop/Index';
 
-interface SignInPageProps {
-  isSignedIn: boolean;
-}
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '99vh',
+  },
+  app: {
+    height: '100px',
+  },
+});
 
-type ReactRouterProps = RouteComponentProps;
+const SignInPage: React.FC = () => {
+  const classes = useStyles();
 
-type EnhancedProps = SignInPageProps & ReactRouterProps;
-
-const SignInPage: React.FC<EnhancedProps> = props => {
   return (
-    <AuthContainer {...props}>
+    <AuthContainer>
       <HtmlTitle title="Tasks" />
       <PageHeader />
-      <Divider hidden />
-      <TaskListSelection {...props} />
-      <Divider hidden />
-      <TaskListContainer />
+      <Container className={classes.root}>
+        <div id="back-to-top-anchor" className={classes.app} />
+        <TaskListSelection />
+        <TaskListContainer />
+        <ScrollTop />
+      </Container>
     </AuthContainer>
   );
 };

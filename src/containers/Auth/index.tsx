@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
@@ -38,4 +38,4 @@ const AuthContainer: FC<EnhancedProps> = ({
   return <>{children}</>;
 };
 
-export default connect(mapStateTopProps)(AuthContainer);
+export default withRouter(connect(mapStateTopProps)(AuthContainer));

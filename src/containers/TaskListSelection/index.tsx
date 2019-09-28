@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { TaskList } from '../../services/googleTasks/models';
 import { application } from '../../actions/Application';
 import { getTaskLists } from '../../actions/TaskList';
@@ -70,7 +70,9 @@ const TaskContainers: FC<EnhancemembersProps> = ({
   );
 };
 
-export default connect(
-  mapStateTopProps,
-  mapDispatchToProps,
-)(TaskContainers);
+export default withRouter(
+  connect(
+    mapStateTopProps,
+    mapDispatchToProps,
+  )(TaskContainers),
+);
