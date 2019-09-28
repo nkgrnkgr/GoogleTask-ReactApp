@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
-import { Form, Divider } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 import TaskComponent from '../Task/index';
-import AddTaskButton from '../AddTaskButton';
-import ClearTaskButton from '../ClearTaskButton/index';
+import { ButtonWithIcon } from '../ButtonWithIcon';
 
 export interface TaskListContainerProps {
   taskList: Task[];
@@ -49,9 +48,14 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   return (
     <Form>
       <div>
-        <AddTaskButton handleOnClick={() => handleInsert()} />
+        <ButtonWithIcon
+          color="secondary"
+          isLeftIcon
+          iconClassName="fas fa-plus"
+          text="Add Task"
+          handleOnClick={() => handleInsert()}
+        />
       </div>
-      <Divider />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -75,9 +79,14 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           )}
         </Droppable>
       </DragDropContext>
-      <Divider />
       <div>
-        <ClearTaskButton handleOnClick={() => handleClear()} />
+        <ButtonWithIcon
+          color="inherit"
+          isLeftIcon
+          iconClassName="far fa-trash-alt"
+          text="Clear Compoleted"
+          handleOnClick={() => handleClear()}
+        />
       </div>
     </Form>
   );

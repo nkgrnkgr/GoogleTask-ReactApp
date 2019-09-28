@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, Icon, Tooltip, Typography } from '@material-ui/core';
+import { Icon, IconButton, Tooltip } from '@material-ui/core';
 
 interface Props {
   title: string;
