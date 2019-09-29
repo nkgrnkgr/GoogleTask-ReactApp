@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Form } from 'semantic-ui-react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Task } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
@@ -46,7 +45,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
   }
 
   return (
-    <Form>
+    <>
       <div>
         <ButtonWithIcon
           color="secondary"
@@ -88,7 +87,7 @@ const TaskListContainer: FC<TaskListContainerProps> = ({
           handleOnClick={() => handleClear()}
         />
       </div>
-    </Form>
+    </>
   );
 };
 

@@ -12,7 +12,7 @@
 - TypeScript
 - Redux
 - Redux-Saga
-- Semantic-UI React
+- Material-UI v4
 
 ## How To Start
 

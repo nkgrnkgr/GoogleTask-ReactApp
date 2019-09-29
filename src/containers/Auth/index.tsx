@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { Typography } from '@material-ui/core';
 import { CombinedState } from '../../reducers/root';
 
 interface StateProps {
@@ -24,7 +25,11 @@ const AuthContainer: FC<EnhancedProps> = ({
   location,
 }) => {
   if (!isGapiClientInitialized) {
-    return <>Google Api Initializing...</>;
+    return (
+      <Typography component="p" color="textSecondary">
+        Google Api Initializing...
+      </Typography>
+    );
   }
 
   const redirectUrl = location.search
