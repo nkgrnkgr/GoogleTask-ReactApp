@@ -5,7 +5,7 @@ import AuthContainer from '../../containers/Auth/index';
 import TaskListContainer from '../../containers/TaskListContainer';
 import TaskListSelection from '../../containers/TaskListSelection';
 import HtmlTitle from '../HtmlTitle';
-import { PageHeader } from '../PageHeader/Index';
+import { PageHeader } from '../../containers/PageHeader/Index';
 import { ScrollTop } from '../ScrollTop/Index';
 
 const useStyles = makeStyles({
