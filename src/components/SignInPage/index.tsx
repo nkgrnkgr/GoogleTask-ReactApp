@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
-import './index.css';
 import {
   Typography,
   makeStyles,
@@ -15,7 +14,12 @@ import HtmlTitle from '../HtmlTitle/index';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      textAlign: 'center',
+      minHeight: '99vh',
     },
     logo: {
       display: 'flex',
@@ -56,27 +60,23 @@ const SignInPage: React.FC<EnhancedProps> = ({ isSignedIn, location }) => {
   return (
     <div className={classes.root}>
       <HtmlTitle title="Google Tasks Client" />
-      <div className="SignInPage">
-        <header className="SingInPage-header">
-          <div className={classes.logo}>
-            <Avatar alt="logo" src={logo} className={classes.avatar} />
-            <Typography color="textPrimary" variant="h4">
-              Google Task Client
-            </Typography>
-          </div>
-          <button
-            type="button"
-            onClick={() => gapi.auth2.getAuthInstance().signIn()}
-            className={classes.button}
-          >
-            <img
-              src={googleSignInButton}
-              alt="google sing in button"
-              className={classes.image}
-            />
-          </button>
-        </header>
+      <div className={classes.logo}>
+        <Avatar alt="logo" src={logo} className={classes.avatar} />
+        <Typography color="textPrimary" variant="h4">
+          Google Task Client
+        </Typography>
       </div>
+      <button
+        type="button"
+        onClick={() => gapi.auth2.getAuthInstance().signIn()}
+        className={classes.button}
+      >
+        <img
+          src={googleSignInButton}
+          alt="google sing in button"
+          className={classes.image}
+        />
+      </button>
     </div>
   );
 };
