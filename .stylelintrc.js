@@ -4,7 +4,7 @@ module.exports = {
     'stylelint-config-standard',
     './node_modules/prettier-stylelint/config.js',
   ],
-  ignoreFiles: ['**/node_modules/**', 'src/styles/**'],
+  ignoreFiles: ['**/node_modules/**', 'src/styles/**', 'public/**/*.*'],
   rules: {
     indentation: 2,
     'string-quotes': 'single',
