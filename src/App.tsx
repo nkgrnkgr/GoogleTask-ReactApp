@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import SignInPage from './containers/SignInPage/index';
+import { BrowserRouter } from 'react-router-dom';
 import TaskListPage from './components/TaskListPage/index';
 import GapiClientInitializer from './containers/GapiClientInitializer/index';
+import SignInPage from './containers/SignInPage/index';
 
 const App: FC = () => {
   return (

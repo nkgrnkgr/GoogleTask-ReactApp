@@ -1,10 +1,17 @@
 import React, { FC } from 'react';
-import { Input, Icon, Button } from 'semantic-ui-react';
 import {
   Draggable,
   DraggingStyle,
   NotDraggingStyle,
 } from 'react-beautiful-dnd';
+import {
+  IconButton,
+  Icon,
+  Input,
+  makeStyles,
+  Theme,
+  createStyles,
+} from '@material-ui/core';
 import { Task } from '../../services/googleTasks/models';
 
 export interface TaskProps {
@@ -14,16 +21,37 @@ export interface TaskProps {
   handleDelete: (task: Task) => void;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    iconButton: {
+      margin: theme.spacing(0),
+    },
+    input: {
+      margin: theme.spacing(0),
+      color: '#fff',
+      background: '#1b1c1d',
+      '&:focus': {
+        border: 'none',
+      },
+    },
+  }),
+);
+
 const TaskComponent: FC<TaskProps> = ({
   task,
   index,
   handleOnChange,
   handleDelete,
 }) => {
+  const classes = useStyles();
+
   const { title = '', status = 'needsAction' } = task;
 
-  const handleOnChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
-    const t = { ...task, title: e.currentTarget.value };
+  const handleOnChangeInput = (value: string) => {
+    const t = { ...task, title: value };
     handleOnChange(t);
   };
 
@@ -39,7 +67,7 @@ const TaskComponent: FC<TaskProps> = ({
     isDragging: boolean,
     draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
   ) => ({
-    background: isDragging ? 'lightgreen' : '#FFFFFF',
+    background: isDragging ? 'lightgreen' : '#1b1c1d',
     ...draggableStyle,
   });
 
@@ -55,34 +83,39 @@ const TaskComponent: FC<TaskProps> = ({
             provided2.draggableProps.style,
           )}
         >
-          <div style={{ display: 'flex' }}>
-            <Button icon basic style={{ boxShadow: '0px 0px' }} disabled>
-              <Icon name="sort" color="blue" />
-            </Button>
-            <Button
-              icon
-              basic
-              style={{ boxShadow: '0px 0px' }}
+          <div className={classes.root}>
+            <IconButton className={classes.iconButton} disabled>
+              <Icon className="fas fa-grip-lines-vertical" />
+            </IconButton>
+            <IconButton
+              aria-label="check"
+              className={classes.iconButton}
               onClick={() => handleOnChangeStatus()}
             >
               <Icon
-                name={status === 'completed' ? 'check' : 'circle outline'}
-                color="blue"
+                color={status === 'completed' ? 'secondary' : 'inherit'}
+                className={
+                  status === 'completed'
+                    ? 'far fa-check-circle'
+                    : 'far fa-circle'
+                }
               />
-            </Button>
+            </IconButton>
             <Input
-              transparent
-              onChange={handleOnChangeInput}
               defaultValue={title || ''}
+              className={classes.input}
+              onChange={e => handleOnChangeInput(e.target.value)}
+              inputProps={{
+                'aria-label': 'description',
+              }}
             />
-            <Button
-              icon
-              basic
-              style={{ boxShadow: '0px 0px' }}
+            <IconButton
+              aria-label="delete"
+              className={classes.iconButton}
               onClick={() => handleDelete(task)}
             >
-              <Icon name="delete" color="red" />
-            </Button>
+              <Icon className="fas fa-times" color="error" />
+            </IconButton>
           </div>
         </div>
       )}
