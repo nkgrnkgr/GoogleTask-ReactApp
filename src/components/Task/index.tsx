@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     iconButton: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
     },
     input: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0),
       color: '#fff',
       background: '#1b1c1d',
       '&:focus': {

@@ -1,5 +1,15 @@
-import React, { FC, SyntheticEvent } from 'react';
-import { Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
+import React, { FC } from 'react';
+// import { Dropdown, DropdownItemProps, DropdownProps } from 'semantic-ui-react';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  Icon,
+  ListItemText,
+  makeStyles,
+  createStyles,
+  Theme,
+} from '@material-ui/core';
 import { TaskList } from '../../services/googleTasks/models';
 import Loading from '../Loader/index';
 
@@ -10,45 +20,14 @@ export interface TaskListSelectionProps {
   defaultSelectedTaskListId: string;
 }
 
-const createOptionsFromTaskLists = (taskLists: TaskList[] = []) => {
-  const options: DropdownItemProps[] = [];
-  if (taskLists.length > 0) {
-    taskLists.map(task => {
-      options.push({
-        key: task.id,
-        text: task.title,
-        value: task.title,
-      });
-
-      return task;
-    });
-  }
-
-  return options;
-};
-
-const findTaskIdFromSelectedValue = (
-  value: string,
-  taskLists: TaskList[],
-): string => {
-  const taskList = taskLists.find(list => list.title === value);
-
-  if (taskList) {
-    return taskList.id || '';
-  }
-
-  return '';
-};
-
-const findTaskListTitleFromSelectedId = (id: string, taskLists: TaskList[]) => {
-  const taskList = taskLists.find(list => list.id === id);
-
-  if (taskList) {
-    return taskList.title || '';
-  }
-
-  return '';
-};
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+    },
+  }),
+);
 
 const TaskListSelection: FC<TaskListSelectionProps> = ({
   taskLists,
@@ -56,6 +35,8 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
   handleOnChange,
   defaultSelectedTaskListId,
 }) => {
+  const classes = useStyles();
+
   if (isLoading) {
     return <Loading />;
   }
@@ -64,37 +45,25 @@ const TaskListSelection: FC<TaskListSelectionProps> = ({
     return <></>;
   }
 
-  const selectedTaskListTitle = findTaskListTitleFromSelectedId(
-    defaultSelectedTaskListId,
-    taskLists,
-  );
-
-  const options = createOptionsFromTaskLists(taskLists);
-
-  const handoleOnChangeTaskList = (data: DropdownProps) => {
-    const { value } = data;
-    if (value) {
-      if (typeof value === 'string') {
-        const id = findTaskIdFromSelectedValue(value, taskLists);
-        handleOnChange(id);
-      }
-    }
-  };
-
   return (
-    <div style={{ width: '40%' }}>
-      <Dropdown
-        placeholder="Select TaskList"
-        fluid
-        selection
-        options={options}
-        onChange={(event: SyntheticEvent, data: DropdownProps) =>
-          handoleOnChangeTaskList(data)
-        }
-        defaultValue={selectedTaskListTitle}
-      />
+    <div className={classes.root}>
+      <List component="nav">
+        {taskLists.map(task => {
+          return (
+            <ListItem
+              button
+              selected={task.id === defaultSelectedTaskListId}
+              onClick={() => handleOnChange(task.id || '')}
+            >
+              <ListItemIcon>
+                <Icon className="fas fa-tasks" />
+              </ListItemIcon>
+              <ListItemText secondary={task.title} />
+            </ListItem>
+          );
+        })}
+      </List>
     </div>
   );
 };
-
 export default TaskListSelection;
